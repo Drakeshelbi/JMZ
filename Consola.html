@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenamiento DBA Master</title>
+    <link rel="website icon" type="png"   href="./img/file (1).png">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        #header {
+            background-color: #0a0a0a;
+            padding: 10px 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        #title {
+            color: #4CAF50;
+            margin: 0;
+        }
+        
+        #subtitle {
+            color: #888;
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
+        }
+        
+        #console-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        #console-output {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        
+        #console-input-container {
+            display: flex;
+            align-items: center;
+            background-color: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        
+        #prompt {
+            color: #4CAF50;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        
+        #console-input {
+            flex: 1;
+            background-color: transparent;
+            border: none;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            outline: none;
+        }
+        
+        .command {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .error {
+            color: #f44336;
+        }
+        
+        .success {
+            color: #4CAF50;
+        }
+        
+        .warning {
+            color: #FFC107;
+        }
+        
+        .info {
+            color: #2196F3;
+        }
+        
+        .table {
+            border-collapse: collapse;
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        .table th, .table td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .table th {
+            background-color: #333;
+        }
+        
+        .table tr:nth-child(even) {
+            background-color: #222;
+        }
+        
+        #level-indicator {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid #444;
+        }
+        
+        #progress-bar {
+            height: 5px;
+            background-color: #333;
+            margin-top: 5px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        #progress {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .exercise {
+            background-color: #2a2a2a;
+            border-left: 3px solid #4CAF50;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .exercise-title {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .exercise-desc {
+            margin: 5px 0;
+        }
+        
+        .hint {
+            color: #FFC107;
+            font-style: italic;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        
+        .hint-content {
+            display: none;
+            background-color: #333;
+            padding: 5px;
+            margin-top: 5px;
+            border-radius: 3px;
+        }
+        
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+        }
+        
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1 id="title">DBA Master Training Console</h1>
+        <p id="subtitle">>Desde cero a DBA Master - Escribe HELP para ver los comandos disponibles</p>
+    </div>
+    
+    <div id="console-container">
+        <div id="console-output"></div>
+        <div id="console-input-container">
+            <span id="prompt">DB-TRAINER></span>
+            <input type="text" id="console-input" autofocus>
+        </div>
+        <br>
+        <button onclick="location.href='Aprendizaje.html';" style="padding: 10px 10px; width: 100px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;">Volver</button>
+    </div>
+    
+    <div id="level-indicator">
+        <div>Nivel: <span id="level-text">Principiante</span> - Progreso: <span id="progress-text">0%</span></div>
+        <div id="progress-bar"><div id="progress"></div></div>
+    </div>
+
+    <script>
+        // Estado de la aplicación
+        const appState = {
+            level: 1,
+            progress: 0,
+            currentExercise: null,
+            completedExercises: [],
+            database: {
+                users: [
+                    { id: 1, name: 'Admin', email: 'admin@company.com', role: 'admin', created_at: '2023-01-01', last_login: '2023-06-15 08:30:45', is_active: true },
+                    { id: 2, name: 'John Doe', email: 'john@company.com', role: 'user', created_at: '2023-01-15', last_login: '2023-06-14 14:22:10', is_active: true },
+                    { id: 3, name: 'Jane Smith', email: 'jane@company.com', role: 'user', created_at: '2023-02-01', last_login: '2023-06-10 09:15:33', is_active: true },
+                    { id: 4, name: 'Bob Johnson', email: 'bob@company.com', role: 'manager', created_at: '2023-03-01', last_login: '2023-05-28 16:45:22', is_active: false }
+                ],
+                products: [
+                    { id: 1, name: 'Laptop', price: 999.99, stock: 50, category: 'Electronics', supplier_id: 1, rating: 4.5, discontinued: false },
+                    { id: 2, name: 'Smartphone', price: 699.99, stock: 100, category: 'Electronics', supplier_id: 2, rating: 4.2, discontinued: false },
+                    { id: 3, name: 'Desk Chair', price: 199.99, stock: 30, category: 'Furniture', supplier_id: 3, rating: 3.8, discontinued: false },
+                    { id: 4, name: 'Old Monitor', price: 149.99, stock: 5, category: 'Electronics', supplier_id: 1, rating: 3.0, discontinued: true }
+                ],
+                orders: [
+                    { id: 1, user_id: 2, product_id: 1, quantity: 1, order_date: '2023-03-01 10:15:33', status: 'completed', payment_method: 'credit_card' },
+                    { id: 2, user_id: 2, product_id: 2, quantity: 2, order_date: '2023-03-05 14:22:10', status: 'completed', payment_method: 'paypal' },
+                    { id: 3, user_id: 3, product_id: 3, quantity: 1, order_date: '2023-03-10 09:15:33', status: 'shipped', payment_method: 'credit_card' },
+                    { id: 4, user_id: 3, product_id: 1, quantity: 1, order_date: '2023-06-01 11:30:45', status: 'processing', payment_method: 'credit_card' }
+                ],
+                suppliers: [
+                    { id: 1, name: 'TechSupplies Inc.', contact: 'Mike Brown', email: 'mike@techsupplies.com', rating: 4.7 },
+                    { id: 2, name: 'MobileTech Ltd.', contact: 'Sarah Lee', email: 'sarah@mobiletech.com', rating: 4.3 },
+                    { id: 3, name: 'OfficeSolutions Co.', contact: 'David Wilson', email: 'david@officesolutions.com', rating: 4.0 }
+                ],
+                logs: [
+                    { id: 1, timestamp: '2023-06-15 08:30:45', user_id: 1, action: 'login', details: 'Successful login from IP 192.168.1.10' },
+                    { id: 2, timestamp: '2023-06-15 08:32:10', user_id: 1, action: 'query_executed', details: 'SELECT * FROM users' },
+                    { id: 3, timestamp: '2023-06-15 09:15:22', user_id: 1, action: 'config_changed', details: 'Changed timeout setting to 300s' },
+                    { id: 4, timestamp: '2023-06-15 10:05:33', user_id: 2, action: 'failed_login', details: 'Failed login attempt with wrong password' }
+                ]
+            },
+            exercises: [
+                {
+                    id: 1,
+                    level: 1,
+                    title: "Consulta básica SELECT",
+                    description: "Escribe una consulta SQL para seleccionar todos los campos de la tabla 'users'.",
+                    solution: "SELECT * FROM users;",
+                    hint: "Usa el comando SELECT * FROM para seleccionar todos los campos de una tabla."
+                },
+                {
+                    id: 2,
+                    level: 1,
+                    title: "Consulta con WHERE",
+                    description: "Escribe una consulta SQL para seleccionar todos los usuarios con rol 'admin'.",
+                    solution: "SELECT * FROM users WHERE role = 'admin';",
+                    hint: "Usa la cláusula WHERE para filtrar registros. Recuerda que los strings van entre comillas simples."
+                },
+                {
+                    id: 3,
+                    level: 2,
+                    title: "Consulta con JOIN",
+                    description: "Escribe una consulta SQL para mostrar el nombre del usuario y el nombre del producto que ha comprado.",
+                    solution: "SELECT u.name AS user_name, p.name AS product_name FROM orders o JOIN users u ON o.user_id = u.id JOIN products p ON o.product_id = p.id;",
+                    hint: "Necesitarás hacer JOIN entre las tablas orders, users y products."
+                },
+                {
+                    id: 4,
+                    level: 2,
+                    title: "Agregación con GROUP BY",
+                    description: "Escribe una consulta SQL para mostrar la cantidad total de productos vendidos por categoría.",
+                    solution: "SELECT p.category, SUM(o.quantity) AS total_sold FROM orders o JOIN products p ON o.product_id = p.id GROUP BY p.category;",
+                    hint: "Usa SUM() para sumar las cantidades y GROUP BY para agrupar por categoría."
+                },
+                {
+                    id: 5,
+                    level: 3,
+                    title: "Creación de índice",
+                    description: "Escribe el comando SQL para crear un índice en el campo email de la tabla users.",
+                    solution: "CREATE INDEX idx_users_email ON users(email);",
+                    hint: "Usa CREATE INDEX seguido del nombre del índice y la tabla y columna a indexar."
+                },
+                {
+                    id: 6,
+                    level: 3,
+                    title: "Backup de base de datos",
+                    description: "Escribe el comando para hacer un backup completo de la base de datos (simulado).",
+                    solution: "BACKUP DATABASE;",
+                    hint: "Usa el comando BACKUP DATABASE (en este entorno simulado)."
+                },
+                {
+                    id: 7,
+                    level: 4,
+                    title: "Optimización de consulta",
+                    description: "Reescribe esta consulta para optimizarla: SELECT * FROM users WHERE name LIKE '%John%' OR email LIKE '%John%';",
+                    solution: "SELECT * FROM users WHERE CONCAT(name, ' ', email) LIKE '%John%';",
+                    hint: "Evita usar LIKE con comodines al inicio cuando sea posible, o considera índices de texto completo."
+                },
+                {
+                    id: 8,
+                    level: 4,
+                    title: "Replicación de base de datos",
+                    description: "Configura la replicación maestra-esclavo (simulado).",
+                    solution: "CONFIGURE REPLICATION MASTER;",
+                    hint: "Usa el comando CONFIGURE REPLICATION (en este entorno simulado)."
+                },
+                {
+                    id: 9,
+                    level: 5,
+                    title: "Plan de ejecución y optimización",
+                    description: "Analiza el plan de ejecución de la siguiente consulta y propone optimizaciones:\n\nSELECT u.name, COUNT(o.id) as order_count\nFROM users u\nLEFT JOIN orders o ON u.id = o.user_id\nWHERE u.role = 'user'\nGROUP BY u.name\nHAVING COUNT(o.id) > 0\nORDER BY order_count DESC;",
+                    solution: "EXPLAIN ANALYZE SELECT u.name, COUNT(o.id) as order_count\nFROM users u\nLEFT JOIN orders o ON u.id = o.user_id\nWHERE u.role = 'user'\nGROUP BY u.name\nHAVING COUNT(o.id) > 0\nORDER BY order_count DESC;\n\n-- Optimización sugerida:\n-- 1. Asegurar índices en users.role y orders.user_id\n-- 2. Considerar un índice compuesto en (role, id) para users\n-- 3. Evaluar si el LEFT JOIN es necesario o puede ser INNER JOIN",
+                    hint: "Usa EXPLAIN ANALYZE para ver el plan de ejecución. Considera índices adecuados y el tipo de JOIN."
+                },
+                {
+                    id: 10,
+                    level: 5,
+                    title: "Particionamiento de tablas",
+                    description: "Crea una tabla particionada por rango para almacenar los logs, particionada por mes.",
+                    solution: "CREATE TABLE logs_partitioned (\n  id SERIAL,\n  timestamp TIMESTAMP NOT NULL,\n  user_id INT,\n  action VARCHAR(50),\n  details TEXT\n) PARTITION BY RANGE (timestamp);\n\n-- Crear particiones para cada mes\nCREATE TABLE logs_2023_06 PARTITION OF logs_partitioned\n  FOR VALUES FROM ('2023-06-01') TO ('2023-07-01');\n\nCREATE TABLE logs_2023_07 PARTITION OF logs_partitioned\n  FOR VALUES FROM ('2023-07-01') TO ('2023-08-01');",
+                    hint: "Usa PARTITION BY RANGE para particionamiento temporal. Define particiones para cada periodo."
+                },
+                
+                // Nivel 6 - Arquitectura de Bases de Datos
+                {
+                    id: 11,
+                    level: 6,
+                    title: "Configuración de clustering",
+                    description: "Configura un cluster de PostgreSQL con 1 maestro y 2 réplicas de lectura (simulado).",
+                    solution: "INITIALIZE CLUSTER WITH MASTER 'node1';\n\nADD REPLICA 'node2' WITH CONNECTION 'user=replicator password=secret host=node2';\n\nADD REPLICA 'node3' WITH CONNECTION 'user=replicator password=secret host=node3';\n\nSTART REPLICATION;",
+                    hint: "Primero inicializa el cluster, luego añade réplicas con sus parámetros de conexión."
+                },
+                {
+                    id: 12,
+                    level: 6,
+                    title: "Sharding horizontal",
+                    description: "Diseña una estrategia de sharding para la tabla de órdenes por región geográfica.",
+                    solution: "CREATE SHARDING RULE orders_by_region ON orders\nUSING COLUMN user_id\nWITH (\n  SHARD_1 FOR VALUES FROM (1) TO (1000) LOCATION 'us-east',\n  SHARD_2 FOR VALUES FROM (1000) TO (2000) LOCATION 'us-west',\n  SHARD_3 FOR VALUES FROM (2000) TO (MAXVALUE) LOCATION 'europe'\n);",
+                    hint: "Define reglas de sharding basadas en rangos de user_id asignados a diferentes ubicaciones."
+                },
+                
+                // Nivel 7 - Rendimiento Extremo
+                {
+                    id: 13,
+                    level: 7,
+                    title: "Optimización de transacciones masivas",
+                    description: "Tienes que importar 10 millones de registros. Optimiza el proceso para minimizar el tiempo de carga.",
+                    solution: "BEGIN;\n\n-- Desactivar índices temporalmente\nALTER TABLE target_table DISABLE INDEX ALL;\n\n-- Configurar parámetros para carga masiva\nSET LOCAL maintenance_work_mem = '1GB';\nSET LOCAL synchronous_commit = OFF;\nSET LOCAL wal_level = minimal;\n\n-- Usar COPY para carga masiva\nCOPY target_table FROM '/path/to/data.csv' WITH (FORMAT csv);\n\n-- Reactivar índices\nALTER TABLE target_table ENABLE INDEX ALL;\n\nCOMMIT;\n\n-- Reconstruir estadísticas\nANALYZE target_table;",
+                    hint: "Desactiva índices temporalmente, aumenta memoria para operaciones, usa COPY en lugar de INSERTs individuales."
+                },
+                {
+                    id: 14,
+                    level: 7,
+                    title: "Query tuning para reportes complejos",
+                    description: "Optimiza esta consulta de reporte que tarda 15 minutos:\n\nSELECT \n  c.category,\n  EXTRACT(YEAR FROM o.order_date) as year,\n  EXTRACT(MONTH FROM o.order_date) as month,\n  SUM(o.quantity * p.price) as revenue,\n  COUNT(DISTINCT o.user_id) as unique_customers\nFROM orders o\nJOIN products p ON o.product_id = p.id\nJOIN users u ON o.user_id = u.id\nWHERE o.order_date BETWEEN '2022-01-01' AND '2022-12-31'\nGROUP BY c.category, year, month\nORDER BY year, month, revenue DESC;",
+                    solution: "-- Crear índices necesarios\nCREATE INDEX idx_orders_date ON orders(order_date);\nCREATE INDEX idx_products_category ON products(category);\n\n-- Crear vista materializada para datos precalculados\nCREATE MATERIALIZED VIEW monthly_sales_mv AS\nSELECT \n  p.category,\n  EXTRACT(YEAR FROM o.order_date) as year,\n  EXTRACT(MONTH FROM o.order_date) as month,\n  SUM(o.quantity * p.price) as revenue,\n  COUNT(DISTINCT o.user_id) as unique_customers\nFROM orders o\nJOIN products p ON o.product_id = p.id\nWHERE o.order_date BETWEEN '2022-01-01' AND '2022-12-31'\nGROUP BY p.category, year, month;\n\n-- Crear índice para la vista materializada\nCREATE INDEX idx_mv_sales ON monthly_sales_mv(year, month, revenue);\n\n-- Consulta optimizada\nSELECT * FROM monthly_sales_mv\nORDER BY year, month, revenue DESC;",
+                    hint: "Considera vistas materializadas, índices adecuados y precalcular datos agregados."
+                },
+                
+                // Nivel 8 - Alta Disponibilidad y Disaster Recovery
+                {
+                    id: 15,
+                    level: 8,
+                    title: "Configuración de failover automático",
+                    description: "Configura un sistema de failover automático con un maestro y dos réplicas en diferentes zonas de disponibilidad.",
+                    solution: "CONFIGURE FAILOVER SYSTEM WITH (\n  MASTER = 'db-master-1',\n  REPLICAS = ('db-replica-1', 'db-replica-2'),\n  HEALTH_CHECK_INTERVAL = '30s',\n  FAILOVER_THRESHOLD = 3,\n  PRIORITY = ('db-replica-1', 'db-replica-2')\n);\n\nENABLE AUTOMATIC FAILOVER;",
+                    hint: "Define umbrales de health check, prioridad de réplicas y parámetros de detección de fallos."
+                },
+                {
+                    id: 16,
+                    level: 8,
+                    title: "Plan de Disaster Recovery",
+                    description: "Crea un script para recuperación ante desastres que restaure la base de datos a un punto en el tiempo específico.",
+                    solution: "# Script de Disaster Recovery\n\n# 1. Detener servicios\nsystemctl stop application_service\n\n# 2. Restaurar último backup completo\npg_restore -U postgres -d main_db /backups/full_backup.dump\n\n# 3. Aplicar WAL logs hasta el punto deseado\nrecovery_target_time = '2023-06-15 14:00:00'\n\n# 4. Configurar recovery.conf\necho \"restore_command = 'cp /wal_archive/%f %p'\" > /var/lib/postgresql/recovery.conf\necho \"recovery_target_time = '$recovery_target_time'\" >> /var/lib/postgresql/recovery.conf\n\n# 5. Iniciar base de datos en modo recovery\npg_ctl start -D /var/lib/postgresql/data -l /var/log/postgresql/recovery.log\n\n# 6. Verificar estado\npg_isready -U postgres\n\n# 7. Reanudar servicios\nsystemctl start application_service",
+                    hint: "Incluye pasos para restaurar backup completo y aplicar logs WAL hasta el punto deseado."
+                },
+                
+                // Nivel 9 - Seguridad Avanzada
+                {
+                    id: 17,
+                    level: 9,
+                    title: "Implementación de Row-Level Security",
+                    description: "Configura Row-Level Security para que los usuarios solo puedan ver sus propias órdenes.",
+                    solution: "-- Habilitar RLS en la tabla\nALTER TABLE orders ENABLE ROW LEVEL SECURITY;\n\n-- Crear política para usuarios regulares\nCREATE POLICY user_orders_policy ON orders\nFOR SELECT USING (user_id = current_user_id());\n\n-- Crear política para administradores\nCREATE POLICY admin_orders_policy ON orders\nFOR SELECT TO admin USING (true);\n\n-- Función helper para obtener el ID del usuario actual\nCREATE OR REPLACE FUNCTION current_user_id()\nRETURNS integer AS $$\nBEGIN\n  RETURN (SELECT id FROM users WHERE email = current_user);\nEND;\n$$ LANGUAGE plpgsql;",
+                    hint: "Necesitarás crear políticas RLS y posiblemente funciones helper para determinar el usuario actual."
+                },
+                {
+                    id: 18,
+                    level: 9,
+                    title: "Auditoría y cumplimiento",
+                    description: "Implementa un sistema de auditoría que registre todos los accesos a datos sensibles.",
+                    solution: "-- Crear tabla de auditoría\nCREATE TABLE audit_log (\n  id SERIAL PRIMARY KEY,\n  event_time TIMESTAMP NOT NULL DEFAULT now(),\n  username TEXT NOT NULL,\n  table_name TEXT NOT NULL,\n  operation TEXT NOT NULL,\n  old_values JSONB,\n  new_values JSONB\n);\n\n-- Crear triggers para tablas sensibles\nCREATE OR REPLACE FUNCTION log_user_changes()\nRETURNS TRIGGER AS $$\nBEGIN\n  IF (TG_OP = 'DELETE') THEN\n    INSERT INTO audit_log(username, table_name, operation, old_values)\n    VALUES (current_user, TG_TABLE_NAME, TG_OP, to_jsonb(OLD));\n  ELSIF (TG_OP = 'UPDATE') THEN\n    INSERT INTO audit_log(username, table_name, operation, old_values, new_values)\n    VALUES (current_user, TG_TABLE_NAME, TG_OP, to_jsonb(OLD), to_jsonb(NEW));\n  ELSIF (TG_OP = 'INSERT') THEN\n    INSERT INTO audit_log(username, table_name, operation, new_values)\n    VALUES (current_user, TG_TABLE_NAME, TG_OP, to_jsonb(NEW));\n  END IF;\n  RETURN NULL;\nEND;\n$$ LANGUAGE plpgsql;\n\n-- Aplicar trigger a tabla users\nCREATE TRIGGER users_audit_trigger\nAFTER INSERT OR UPDATE OR DELETE ON users\nFOR EACH ROW EXECUTE FUNCTION log_user_changes();",
+                    hint: "Usa triggers para capturar cambios y almacenarlos en una tabla de auditoría con los valores antiguos y nuevos."
+                }
+            ]
+        };
+
+        // Elementos del DOM
+        const consoleOutput = document.getElementById('console-output');
+        const consoleInput = document.getElementById('console-input');
+        const levelText = document.getElementById('level-text');
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress');
+
+        // Comandos disponibles
+        const commands = {
+            'HELP': {
+                description: 'Muestra esta ayuda',
+                execute: () => {
+                    output('Comandos disponibles:', 'info');
+                    output('HELP - Muestra esta ayuda', 'info');
+                    output('CLEAR - Limpia la consola', 'info');
+                    output('SHOW TABLES - Muestra las tablas disponibles', 'info');
+                    output('DESCRIBE [table] - Muestra la estructura de una tabla', 'info');
+                    output('EXERCISE - Muestra el ejercicio actual', 'info');
+                    output('HINT - Muestra una pista para el ejercicio actual', 'info');
+                    output('SOLUTION - Muestra la solución del ejercicio actual', 'warning');
+                    output('NEXT - Pasa al siguiente ejercicio', 'info');
+                    output('LEVEL - Muestra tu nivel actual y progreso', 'info');
+                    output('Cualquier consulta SQL será ejecutada contra la base de datos simulada', 'info');
+                }
+            },
+            'CLEAR': {
+                description: 'Limpia la consola',
+                execute: () => {
+                    consoleOutput.innerHTML = '';
+                }
+            },
+            'SHOW TABLES': {
+                description: 'Muestra las tablas disponibles',
+                execute: () => {
+                    output('Tablas en la base de datos:', 'info');
+                    Object.keys(appState.database).forEach(table => {
+                        output(`- ${table}`, 'info');
+                    });
+                }
+            },
+            'DESCRIBE': {
+                description: 'Muestra la estructura de una tabla',
+                execute: (args) => {
+                    if (args.length === 0) {
+                        output('Uso: DESCRIBE [nombre_tabla]', 'error');
+                        return;
+                    }
+                    
+                    const tableName = args[0];
+                    if (!appState.database[tableName]) {
+                        output(`La tabla '${tableName}' no existe.`, 'error');
+                        return;
+                    }
+                    
+                    output(`Estructura de la tabla '${tableName}':`, 'info');
+                    if (appState.database[tableName].length === 0) {
+                        output('La tabla está vacía', 'warning');
+                        return;
+                    }
+                    
+                    // Mostrar columnas basado en el primer registro
+                    const columns = Object.keys(appState.database[tableName][0]);
+                    output(columns.join(', '), 'info');
+                }
+            },
+            'EXERCISE': {
+                description: 'Muestra el ejercicio actual',
+                execute: () => {
+                    if (!appState.currentExercise) {
+                        startRandomExercise();
+                        return;
+                    }
+                    
+                    showExercise(appState.currentExercise);
+                }
+            },
+            'HINT': {
+                description: 'Muestra una pista para el ejercicio actual',
+                execute: () => {
+                    if (!appState.currentExercise) {
+                        output('No hay un ejercicio activo. Usa EXERCISE para empezar uno.', 'error');
+                        return;
+                    }
+                    
+                    output(`Pista: ${appState.currentExercise.hint}`, 'hint');
+                }
+            },
+            'SOLUTION': {
+                description: 'Muestra la solución del ejercicio actual',
+                execute: () => {
+                    if (!appState.currentExercise) {
+                        output('No hay un ejercicio activo. Usa EXERCISE para empezar uno.', 'error');
+                        return;
+                    }
+                    
+                    output(`Solución: ${appState.currentExercise.solution}`, 'warning');
+                    output('Considera intentar resolverlo por ti mismo antes de ver la solución.', 'warning');
+                }
+            },
+            'NEXT': {
+                description: 'Pasa al siguiente ejercicio',
+                execute: () => {
+                    startRandomExercise();
+                }
+            },
+            'LEVEL': {
+                description: 'Muestra tu nivel actual y progreso',
+                execute: () => {
+                    updateLevelIndicator();
+                    output(`Nivel actual: ${getLevelName(appState.level)} (${appState.level})`, 'info');
+                    output(`Progreso: ${appState.progress}%`, 'info');
+                    output(`Ejercicios completados: ${appState.completedExercises.length}`, 'info');
+                }
+            }
+        };
+
+        // Función para mostrar texto en la consola
+        function output(text, type = 'normal') {
+            const line = document.createElement('div');
+            line.className = type;
+            
+            // Resaltar comandos SQL
+            if (type === 'command') {
+                const parts = text.split(/(SELECT|FROM|WHERE|JOIN|ON|GROUP BY|ORDER BY|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|INDEX|BACKUP|CONFIGURE|REPLICATION)/g);
+                
+                parts.forEach((part, index) => {
+                    if (index % 2 === 1) { // Es una palabra clave
+                        const span = document.createElement('span');
+                        span.className = 'command';
+                        span.textContent = part;
+                        line.appendChild(span);
+                    } else {
+                        line.appendChild(document.createTextNode(part));
+                    }
+                });
+            } else {
+                line.textContent = text;
+            }
+            
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        // Función para ejecutar comandos
+        function executeCommand(input) {
+            output(`DB-TRAINER> ${input}`, 'command');
+            
+            const parts = input.split(' ');
+            const command = parts[0].toUpperCase();
+            const args = parts.slice(1);
+            
+            if (commands[command]) {
+                commands[command].execute(args);
+            } else {
+                // Intentar ejecutar como consulta SQL
+                executeSQL(input);
+            }
+        }
+
+        // Función para ejecutar consultas SQL (simuladas)
+        function executeSQL(query) {
+            // Normalizar la consulta
+            const normalizedQuery = query.trim().toUpperCase();
+            
+            // Verificar si es una solución a un ejercicio
+            if (appState.currentExercise && 
+                normalizedQuery === appState.currentExercise.solution.trim().toUpperCase()) {
+                output('¡Correcto! Has resuelto el ejercicio.', 'success');
+                completeExercise();
+                return;
+            }
+            
+            // Simular ejecución de consultas básicas
+            if (normalizedQuery.startsWith('SELECT')) {
+                // Extraer el nombre de la tabla
+                const fromIndex = normalizedQuery.indexOf('FROM');
+                if (fromIndex === -1) {
+                    output('Error en la consulta: falta cláusula FROM', 'error');
+                    return;
+                }
+                
+                const tablePart = query.substring(fromIndex + 4).trim().split(' ')[0];
+                const tableName = tablePart.replace(';', '').toLowerCase();
+                
+                if (!appState.database[tableName]) {
+                    output(`Error: la tabla '${tableName}' no existe.`, 'error');
+                    return;
+                }
+                
+                // Mostrar resultados (simplificado)
+                displayTable(appState.database[tableName]);
+            } else if (normalizedQuery.startsWith('CREATE INDEX')) {
+                output('Índice creado exitosamente.', 'success');
+            } else if (normalizedQuery.startsWith('BACKUP DATABASE')) {
+                output('Backup completado exitosamente.', 'success');
+            } else if (normalizedQuery.startsWith('CONFIGURE REPLICATION')) {
+                output('Replicación configurada exitosamente.', 'success');
+            } else {
+                output('Consulta ejecutada (simulada). En un entorno real esto afectaría la base de datos.', 'info');
+            }
+        }
+
+        // Función para mostrar una tabla
+        function displayTable(data) {
+            if (data.length === 0) {
+                output('La tabla está vacía.', 'info');
+                return;
+            }
+            
+            const table = document.createElement('table');
+            table.className = 'table';
+            
+            // Crear encabezados
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            
+            Object.keys(data[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            });
+            
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            // Crear filas de datos
+            const tbody = document.createElement('tbody');
+            
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                Object.values(item).forEach(value => {
+                    const td = document.createElement('td');
+                    td.textContent = value;
+                    row.appendChild(td);
+                });
+                
+                tbody.appendChild(row);
+            });
+            
+            table.appendChild(tbody);
+            consoleOutput.appendChild(table);
+        }
+
+        // Función para mostrar un ejercicio
+        function showExercise(exercise) {
+            const exerciseDiv = document.createElement('div');
+            
+            // Asignar clase según nivel
+            if (exercise.level >= 7) {
+                exerciseDiv.className = 'exercise expert';
+            } else if (exercise.level >= 5) {
+                exerciseDiv.className = 'exercise advanced';
+            } else {
+                exerciseDiv.className = 'exercise';
+            }
+            
+            const title = document.createElement('div');
+            title.className = 'exercise-title';
+            title.textContent = `Ejercicio #${exercise.id} (Nivel ${exercise.level} - ${getLevelName(exercise.level)}): ${exercise.title}`;
+            
+            const desc = document.createElement('div');
+            desc.className = 'exercise-desc';
+            // Mantener saltos de línea en la descripción
+            desc.innerHTML = exercise.description.replace(/\n/g, '<br>');
+            
+            exerciseDiv.appendChild(title);
+            exerciseDiv.appendChild(desc);
+            
+            consoleOutput.appendChild(exerciseDiv);
+        }
+
+        // Función para iniciar un ejercicio aleatorio
+        function startRandomExercise() {
+            // Filtrar ejercicios no completados del nivel actual o inferior
+            const availableExercises = appState.exercises.filter(ex => 
+                !appState.completedExercises.includes(ex.id) && ex.level <= appState.level
+            );
+            
+            if (availableExercises.length === 0) {
+                // Todos los ejercicios de este nivel completados, subir de nivel
+                if (appState.level < 4) {
+                    appState.level++;
+                    appState.completedExercises = [];
+                    output(`¡Felicidades! Has avanzado al nivel ${appState.level} (${getLevelName(appState.level)}).`, 'success');
+                    updateLevelIndicator();
+                    startRandomExercise();
+                } else {
+                    output('¡Felicidades! Has completado todos los niveles. Eres ahora un DBA Senior.', 'success');
+                    appState.currentExercise = null;
+                }
+                return;
+            }
+            
+            // Seleccionar ejercicio aleatorio
+            const randomIndex = Math.floor(Math.random() * availableExercises.length);
+            appState.currentExercise = availableExercises[randomIndex];
+            
+            showExercise(appState.currentExercise);
+        }
+
+        // Función para completar un ejercicio
+        function completeExercise() {
+            if (!appState.currentExercise) return;
+            
+            appState.completedExercises.push(appState.currentExercise.id);
+            
+            // Calcular progreso
+            const levelExercises = appState.exercises.filter(ex => ex.level === appState.level);
+            const completed = appState.completedExercises.filter(id => 
+                appState.exercises.find(ex => ex.id === id)?.level === appState.level
+            ).length;
+            
+            appState.progress = Math.round((completed / levelExercises.length) * 100);
+            updateLevelIndicator();
+            
+            // Pasar al siguiente ejercicio después de un breve retraso
+            setTimeout(() => {
+                startRandomExercise();
+            }, 1500);
+        }
+
+        // Función para obtener el nombre del nivel
+        function getLevelName(level) {
+            const levels = {
+                1: 'Principiante',
+                2: 'Intermedio',
+                3: 'Avanzado',
+                4: 'Senior',
+                5: 'DBA Master I',
+                6: 'DBA Master II',
+                7: 'Performance Expert',
+                8: 'HA/DR Specialist',
+                9: 'Security Architect'
+            };
+            return levels[level] || 'Desconocido';
+        }
+
+        // Función para actualizar el indicador de nivel
+        function updateLevelIndicator() {
+            levelText.textContent = getLevelName(appState.level);
+            progressText.textContent = `${appState.progress}%`;
+            progressBar.style.width = `${appState.progress}%`;
+        }
+
+        // Event listener para el input
+        consoleInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const input = consoleInput.value.trim();
+                if (input) {
+                    executeCommand(input);
+                }
+                consoleInput.value = '';
+            }
+        });
+
+        // Añadir cursor parpadeante al inicio
+        function addBlinkingCursor() {
+            const cursor = document.createElement('span');
+            cursor.textContent = '_';
+            cursor.className = 'blink';
+            consoleOutput.appendChild(cursor);
+            
+            // Eliminar el cursor después de que el usuario comience a escribir
+            consoleInput.addEventListener('input', function removeBlinkOnce() {
+                cursor.remove();
+                consoleInput.removeEventListener('input', removeBlinkOnce);
+            }, { once: true });
+        }
+
+        // Inicialización
+        output('Bienvenido al Entrenamiento de DBA', 'success');
+        output('Para comenzar, escribe uno de los siguientes comandos:', 'info');
+        output('- HELP: Ver todos los comandos disponibles', 'info');
+        output('- EXERCISE: Empezar un ejercicio de SQL', 'info');
+        output('- SHOW TABLES: Ver las tablas disponibles en la base de datos', 'info');
+        updateLevelIndicator();
+        addBlinkingCursor();
+        
+        // Darle foco al input
+        consoleInput.focus();
+    </script>
+</body>
+</html>

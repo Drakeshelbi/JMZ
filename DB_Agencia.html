@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="font-family: 'Bell MT', serif;">DRAKE... | Documentación Base de Datos - [Universidad]</title>
+    <link rel="website icon" type="png" href="./img/file (1).png">
+    <style>
+        :root {
+            --primary-color:black;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --accent-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            color: var(--primary-color);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+        }
+        
+        .screenshot, .feature-img {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .screenshot:hover, .feature-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-img {
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 0.3s ease;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close:hover,
+        .close:focus {
+            background: rgba(0, 0, 0, 0.8);
+            text-decoration: none;
+        }
+        
+        .modal-caption {
+            text-align: center;
+            color: #fff;
+            margin-top: 15px;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .zoom-hint {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .card img:hover {
+            transform: scale(1.05);
+        }
+        
+        .color-swatch {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .highlight {
+            background-color: #fffde7;
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: #777;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 10px;
+                max-width: 95%;
+                max-height: 95%;
+            }
+            
+            .close {
+                font-size: 28px;
+                width: 40px;
+                height: 40px;
+                top: 5px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="./img/file (1).png" alt="Logo">
+                <h1 style="font-family: 'Bell MT', serif;">DRAKE.. | Experiencia Laboral</h1>
+            </div>
+             <p>Creación y Adminstración de Base de Datos.</p>
+    </header>
+
+    <!-- Modal para visualizar imágenes -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="zoom-hint">Click para cerrar</div>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <section id="introduccion">
+        <h2>Agencia de viajes</h2>
+        <p>Este documento proporciona una visión general completa de la base de datos que se creo desde cero  y se lleno con datos de Archivos en Excel está base de datos se creo con el fin de enteneder como es que funcionan las agencias de viajes para este proyecto haremos usao de MySQL en este gestor de bases de datos.</p>
+        
+        <img src="./Ing/Captura de pantalla 2023-07-30 224412.png" alt="la página principal" class="screenshot" data-caption="Nombre del proyetco.">
+        <p class="caption"><em>Vista previa de la página principal del proyecto.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2>2. Objetivos del Proyecto</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./Ing/Captura de pantalla 2023-07-30 130405.png" alt="Gestión de agencia de viajes" class="zoomable" data-caption="Arquitectura Proyecto">
+                <h3>Arquitectura básica muy eficiente de flujo de trabajos</h3>
+                <p>El sitio está diseñado para captar la atención de nuestro público objetivo y convertirlos en nuestros clientes para este proyecto se creara una base de datos para tener el control de todos los movimientos de cada uno.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/Captura de pantalla 2023-07-30 232453.png" alt="Diagrama E-R" class="zoomable" data-caption="Estructura de tablas con Cardinalidad">
+                <h3>Esquema Básico de nuestras tablas principales E-R</h3>
+                <p>Para este proyecto se utilizaron herramientas como MySQL y Dia para deiseños de E-R y Modelos relacionales</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/Captura de pantalla 2023-07-30 233117.png" alt="Modelo Relacional" class="zoomable" data-caption="Busqueda de atributos necesarios y tipos de datos">
+                <h3>Insdispesable cuando estas iniciando en el mundo de las Bases de Datos</h3>
+                <p>Diseño profesional sobre los datos necesarios para una tabla atributos, como saber cuales son compuestos es muy factibles para entender de aquí como normalizar bases de datos.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/Captura de pantalla_20221210_103646.png" alt=" " class="zoomable" data-caption="Tablas new">
+                <h3>Consulta Básica de tablas en proceso</h3>
+                <p>En este apartado se estan haciendo consultas a las tablas creadas anteriormente para ver la estructura de las tablas y corroborar el tipo de dato de cada registro que se va a insertar</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/Captura de pantalla 2023-07-30 234746.png" alt="Consultas" class="zoomable" data-caption="Panel de marketing y gestión de campañas">
+                <h3>Consultas a la base de datos</h3>
+                <p>En esta imagen se puede observar varias consultas a la base de datos para evaluar que no exista redundancia de datos ademas de errores al cargar datos de prueba, para prevenir la redundancia de datos al momento de estar en producción.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/Captura de pantalla_20221210_103544.png" alt="Insertar datos" class="zoomable" data-caption="Insercción de datos">
+                <h3>Insertar Registros ala base de datos</h3>
+                <p>Insercción de datos a tablas de la base de datos probando los datos, este proceso es utilizado cuando estas creando una base de datos y ya se cuentan con datos por defecto además de que en algunas ocaciones se hace mediante ETL.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="diseno">
+        <h2>3. Diseño y Estructura</h2>
+        
+        <h3>3.1 Paleta de Colores</h3>
+        <div>
+            <span class="color-swatch" style="background-color: #3498db;" title="Color primario"></span>
+            <span class="color-swatch" style="background-color: #2ecc71;" title="Color secundario"></span>
+            <span class="color-swatch" style="background-color: #2c3e50;" title="Color oscuro"></span>
+            <span class="color-swatch" style="background-color: #ecf0f1;" title="Color claro"></span>
+            <span class="color-swatch" style="background-color: #e74c3c;" title="Color de acento"></span>
+        </div>
+        
+        <h3>3.2 Tipografía</h3>
+        <p>El sitio utiliza la combinación de <strong>Segoe UI</strong> para títulos y <strong>Tahoma</strong> para el texto del cuerpo, garantizando legibilidad y estética profesional.</p>
+        
+        <h3>3.3 Estructura del Sitio</h3>
+        <img src="sitemap.png" alt="Mapa del sitio" class="feature-img" data-caption="Estructura y organización del sitio web">
+    </section>
+
+    <section id="caracteristicas">
+        <h2>4. Características Principales</h2>
+        
+        <div class="highlight">
+            <h3>Galería de Productos Interactiva</h3>
+            <p>Presentación visual de productos con zoom, cambio de color y vista 360°.</p>
+            <img src="product-gallery.gif" alt="Demo de galería de productos" class="screenshot" data-caption="Demostración de la galería interactiva de productos">
+        </div>
+        
+        <div class="highlight">
+            <h3>Formulario de Contacto Inteligente</h3>
+            <p>Validación en tiempo real y campos dinámicos según la selección del usuario.</p>
+            <img src="contact-form.jpg" alt="Formulario de contacto" class="screenshot" data-caption="Formulario de contacto con validación inteligente">
+        </div>
+    </section>
+
+    <section id="requisitos">
+        <h2>5. Requisitos Técnicos</h2>
+        
+        <h3>5.1 Compatibilidad</h3>
+        <p>El sitio está optimizado para:</p>
+        <ul>
+            <li>Chrome (últimas 3 versiones)</li>
+            <li>Firefox (últimas 3 versiones)</li>
+            <li>Safari (últimas 3 versiones)</li>
+            <li>Edge (últimas 3 versiones)</li>
+            <li>Dispositivos móviles (responsive design)</li>
+        </ul>
+        
+        <h3>5.2 Tecnologías Utilizadas</h3>
+        <img src="tech-stack.png" alt="Tecnologías utilizadas" class="feature-img" data-caption="Stack tecnológico utilizado en el desarrollo">
+    </section>
+
+    <section id="imagenes">
+        <h2>6. Guía de Imágenes</h2>
+        
+        <h3>6.1 Especificaciones</h3>
+        <p>Todas las imágenes deben cumplir con:</p>
+        <ul>
+            <li>Formato: JPEG (calidad 80+) o PNG (para transparencias)</li>
+            <li>Tamaño máximo: 1920px de ancho</li>
+            <li>Peso máximo: 300KB por imagen</li>
+            <li>Optimizadas para web (compresión sin pérdida)</li>
+        </ul>
+        
+        <h3>6.2 Ejemplos de Buenas Prácticas</h3>
+        <div class="grid">
+            <div>
+                <img src="good-image.jpg" alt="Ejemplo de buena imagen" class="screenshot" data-caption="Ejemplo de imagen optimizada: Alto contraste, enfoque claro, composición equilibrada">
+                <p><em>Buena: Alto contraste, enfoque claro, composición equilibrada</em></p>
+            </div>
+            <div>
+                <img src="bad-image.jpg" alt="Ejemplo de mala imagen" class="screenshot" data-caption="Ejemplo de imagen NO optimizada: Poco contraste, desenfocada, composición pobre">
+                <p><em>Mala: Poco contraste, desenfocada, composición pobre</em></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Documentación actualizada al [fecha] | Versión 1.0</p>
+        <p>© 2023 [Nombre de la Empresa]. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Función para abrir el modal de imagen
+        function openModal(imgElement) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = imgElement.src;
+            modalImg.alt = imgElement.alt;
+            
+            // Usar el atributo data-caption si existe, sino usar el alt
+            const caption = imgElement.getAttribute('data-caption') || imgElement.alt;
+            modalCaption.textContent = caption;
+            
+            // Prevenir scroll del body cuando el modal está abierto
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar event listeners a todas las imágenes con clase screenshot, feature-img o zoomable
+            const zoomableImages = document.querySelectorAll('.screenshot, .feature-img, .zoomable');
+            
+            zoomableImages.forEach(function(img) {
+                img.addEventListener('click', function() {
+                    openModal(this);
+                });
+                
+                // Agregar hint visual
+                img.style.position = 'relative';
+            });
+
+            // Cerrar modal al hacer click en la X
+            document.querySelector('.close').addEventListener('click', closeModal);
+
+            // Cerrar modal al hacer click fuera de la imagen
+            document.getElementById('imageModal').addEventListener('click', function(e) {
+                if (e.target === this || e.target === document.getElementById('modalImage')) {
+                    closeModal();
+                }
+            });
+
+            // Cerrar modal con la tecla ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

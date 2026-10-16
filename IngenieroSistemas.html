@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="font-family: 'Bell MT', serif;">Adminstración de Sistemas - [INTERCARTON]</title>
+    <link rel="website icon" type="png" href="./img/file (1).png">
+    <style>
+        :root {
+            --primary-color: black;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --accent-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            color: var(--primary-color);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+        }
+        
+        .screenshot, .feature-img {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            max-width: 30%;
+            height: auto;
+            margin: 1rem 0;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .screenshot:hover, .feature-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-img {
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 0.3s ease;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close:hover,
+        .close:focus {
+            background: rgba(0, 0, 0, 0.8);
+            text-decoration: none;
+        }
+        
+        .modal-caption {
+            text-align: center;
+            color: #fff;
+            margin-top: 15px;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .zoom-hint {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .card img:hover {
+            transform: scale(1.05);
+        }
+        
+        .color-swatch {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .highlight {
+            background-color: #fffde8;
+            padding: 15px;
+            border-left: 4px solid var(--Primary-color);
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: #777;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 10px;
+                max-width: 95%;
+                max-height: 95%;
+            }
+            
+            .close {
+                font-size: 28px;
+                width: 40px;
+                height: 40px;
+                top: 5px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="./img/file (1).png" alt="Logo">
+                <h1 style="font-family: 'Bell MT', serif;">DRAKE.. | Experiencia Laboral</h1>
+            </div>
+             <p>Ingeniero en Sistemas Intercarton.</p>
+    </header>
+
+    <!-- Modal para visualizar imágenes -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="zoom-hint">Click para cerrar</div>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <section id="introduccion">
+        <h2>1. Introducción</h2>
+        <p>Como Ingeniero en sistemas computacionales se me ha dado la oportunidad de estar en una empresa como Auxiliar de Sistemas en donde desarrolle mis habilidades <param name="" value=""> gestionar y manejar servidores y equipos de computo de la empresa así como gestión de ERP (intelisis) donde realice monitoreo de facturas, soluciones de departamentos en donde debíamos de realizar pruebas en nuestros módulos secundarios para pasar después a producción. A continuación se muestran varias de las actividades que he realizado.</p>
+        
+        <img src="./Ing/SHOPOS.jpg" alt="Captura de pantalla de la página principal" class="screenshot" data-caption="Panel de escanoe de SHOPOS.">
+        <p class="caption"><em>Seguridad Informática con Sophos Antivirus Cuento con experiencia en la implementación y administración de Sophos Antivirus, asegurando la protección integral de sistemas contra malware, ransomware y otras amenazas cibernéticas, optimizando políticas de seguridad y gestionando endpoints para garantizar la integridad de los sistemas de la empresa.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2>Administración de Antivirus SHOPOS</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./Ing/IMG_20240814_104948.jpg" alt="escaneo SHOPOS" class="zoomable" data-caption="Análisis despues de actualización de shopos">
+                <h3>Escaneo después de parche de seguridad</h3>
+                <p>Cada actualización de shopos se cambia de versión y posteriormente se escanea</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20240813_110504.jpg" alt="Soporte a usuario" class="zoomable" data-caption="actualización">
+                <h3>Instalación de parche de seguridad</h3>
+                <p>Debemos de configurar shopos a cada usuario de la empresa en donde debemos de administrar las cuentas.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20240813_105311.jpg" alt="Icono de objetivo 3" class="zoomable" data-caption="Objetivo de generar confianza">
+                <h3>Generar confianza a la hora de trabajar</h3>
+                <p>Cada que se detecta una amenza se realiza un diagnostico de donde proviene cierto virus, o phising en caso de correos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="Monitoreo de CCTV">
+        <h2>CCTV</h2>
+        <p>Experiencia en Sistemas de Videovigilancia CCTV Cuento con experiencia en la instalación, configuración y mantenimiento de sistemas de videovigilancia CCTV, incluyendo cámaras analógicas y digitales. He trabajado con software de gestión de video como Hikvision iVMS, asegurando la correcta integración de los dispositivos con la infraestructura de red.</p>
+        
+        <img src="./Ing/ivms-4200.jpg" alt="Menu principal" class="screenshot" data-caption="SOFTWARE IVMS-4200.">
+        <p class="caption"><em>Administración de CCTV con IVMS-4200.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2>Asignación de grupo de camaras a seguridad de la empresa</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./Ing/IMG_20241114_140036.jpg" alt="Usuario seguridad" class="zoomable" data-caption="Asignación por politicas de la empresa">
+                <h3>Usuario a seguridad</h3>
+                <p>Por politicas de la empresa solo deben tener acceso 3 personas de la empresa cada uno con ciertos grupos.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20241114_133425.jpg" alt="Menú de software" class="zoomable" data-caption="Menú">
+                <h3>Menú de de IVMS-4200</h3>
+                <p>En este menú tenemos varias opciones de configuación de las camaras.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IVMS_CONF.png" alt="Icono de objetivo 3" class="zoomable" data-caption="Configuración">
+                <h3>Conectar con cuenta de la empresa</h3>
+                <p>En la empresa se debe de configurar con la cuenta principal en donde se configuraron los grupos de trabajo.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="Soporte Técnico">
+        <h2>SOPORTE TÉCNICO</h2>
+        <p>Durante el tiempo de Intercarton aplique mis conocimientos que desarrolle durante mis prácticas en Vento Motrocyles U.S.A que me ayudaban con mi base solida a brindar soporte técnico a usuarios dentro de la empresa realice mantenimiento correctivo y preventivo de sistemas operativos Windows 10, 11, DELL, HP, Windows Server, Linux, remotamente y fisicamente utilizando herraminetas como ISL Online y Escritorio remoto. Configuración de software y Adminstración de correos entre otras actividades.</p>
+        
+        <img src="./Ing/ISL online.jpg" alt="Software de Soporte técnico" class="screenshot" data-caption="SOFTWARE ISL Online">
+        <p class="caption"><em>Atención a usuarios y a jefes de Departamentos mediante ISL Online.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2></h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./Ing/IMG_20240905_114521.jpg" alt="Soporte y limpieza" class="zoomable" data-caption="Cambio de Baterias">
+                <h3>Cambio de Bateria</h3>
+                <p>Brinde soporte técnico a usuarios con equipos Laptops Dell en donde realize mantenimineto de baterias unidades de almacenamiento llevando un registro de cada usuario.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20250120_121144.jpg" alt="computadoras de escritorio" class="zoomable" data-caption="Desktop">
+                <h3>Ademas de usuarios portatiles brinde soporte técnico a usuarios de escritorio para temas de producción dentro de la empresa.</h3>
+                <p>Formateo de usuarios de escritorio, instalación de imagenes Windows de la empresa control de versiones actualizadas, instalación de software de la empresa, configuración de antivirus, ERP, y permisos a Servidor de Datos etc.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20250120_133237.jpg" alt="configuración de arranque de so" class="zoomable" data-caption="Configuración">
+                <h3>Levantamiento de equipos de escritorio </h3>
+                <p>En la empresa se debe de configurar con a todos los usuarios con SO reciente para manejo de antivirus</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="Soporte Técnico">
+        <h2>Manejo de ERP intelisis</h2>
+        <p>Como auxiliar de sistemas en INTERCARTON se me asignaron tareas de administración de ERP a usuarios dentro de la empresa realizaba actividades como seguridad de usuarios asignaba cuentas permisos y desbloqueaba a usuarios bloqueados
+            además de participar con jefes de areas como facturación y contabilidad para actualización de Información de clientes seguimiento de pedidos y consultas dentro de la base de datos para análisis de datos dentro de la empresa para campañas de marketing actualizaba procesos dentro del ERP configurados en Procedimientos almacenados dentro de la base de Datos
+        </p>
+        
+        <img src="./img/Intelisis.jpg" alt="ERP de la empresa" class="screenshot" data-caption="SOFTWARE ERP INTELISIS">
+        <p class="caption"><em>ERP administración de usuarios en INTERCARTON.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2></h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./Ing/IMG_20250109_115657.jpg" alt="Monitoreo remisiones" class="zoomable" data-caption="Análisis">
+                <h3>Seguimiento a Remisión</h3>
+                <p>Realizaba monitoreo de remisiones para corroborar con jefes de departamentos en casos de insidencias.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG-20241223-WA0010.jpeg" alt="Busqueda de facturas" class="zoomable" data-caption="Administración de campos">
+                <h3>actualización de datos en base de datos para reflejarse en facturas</h3>
+                <p>Cambios e implementaciones dentro de ERP intelisis en entorno de pruebas con jefes de departamentos para despues pasarlo a producción.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/Imagen de WhatsApp 2025-06-18 a las 19.45.41_7afe8ef8.jpg" alt="configuración de usuario" class="zoomable" data-caption="Configuración">
+                <h3>Administración de usuarios y licencias en intelisis</h3>
+                <p>Monitoreo de usuarios del sistema configuración de nuevos usuarios, administración de licencias y permisos a areas</p>
+            </div>
+        </div>
+    </section>
+
+     <section id="Implementación de Proyecto">
+        <h2>Integración de Sistema laser para marca de su mercancia</h2>
+        <p>Colabore a la integración de nuevo software de laser para mejorar la eficiencia y automatizar procesos en producción.</p>
+        
+        <img src="./Ing/IMG_20241028_152649.jpg" alt="Software Laser" class="screenshot" data-caption="SOFTWARE LASER">
+        <p class="caption"><em>Configuración de Laser.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2></h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./Ing/IMG_20240926_105136.jpg" alt="Configuración de logo" class="zoomable" data-caption="Config. Logo INTERCARTON">
+                <h3>Configuración de logo de INTERCARTON</h3>
+                <p>Colabore a la configuración de el logo de la empresa para realizar impresiones en su materia de carga.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20240926_132627.jpg" alt="Prueba con el laser fisico" class="zoomable" data-caption="Prueba de laser">
+                <h3>Prueba de implementación del laser con el software</h3>
+                <p>Se realizaron pruebas de esta herramineta con el software mediante conexión wi-fi y mediante cable</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20240925_122313.jpg" alt="Entrega de resultados" class="zoomable" data-caption="Resultados">
+                <h3>Enrega de resultados a encargado del area</h3>
+                <p>Se monto la instalación correctamente y se entregaron los resultados deseados</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="Proyecto Monitoreo de producción">
+        <h2>TABLEROS ELÉCTRONICOS</h2>
+        <p>Se colaboro con un equipo extranjero en donde se implemento un sistema de monitoreo de entrada y salida de producción. Para mejorar el flujo de trabajo y optimizar producción.</p>
+        
+        <img src="./Ing/TableroProduccion.jpg" alt="Monitoreo de Producción" class="screenshot" data-caption="Tableros Análisis de producción">
+        <p class="caption"><em>Implementación de tableros electrónicos a producción.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2></h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./Ing/IMG_20241226_112453.jpg" alt="Instalación de tablero" class="zoomable" data-caption="Conexión de tableros a red">
+                <h3>Conexión de Tableros eléctronicos a nodos de red</h3>
+                <p>Configuración de tarjeta de internet sensores a tableros y a maquinaria de producción.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20241226_110621_HDR.jpg" alt="Instalación de tableros" class="zoomable" data-caption="Instalación y conexión">
+                <h3>Conexión a nodos de Red mediante RJ45</h3>
+                <p>Se colaboro con el equipo de trabajo fui encargado de la instalación y conexión de estos tableros.</p>
+            </div>
+            <div class="card">
+                <img src="./Ing/IMG_20241230_152339.jpg" alt="Asigación de IP" class="zoomable" data-caption="Configuración  IP">
+                <h3>Configuración de dirección IP</h3>
+                <p>Configuración de cada uno de estos tres tableros eléctronicos a cada maquina de producción mediante nodos de red para asignación de IP y posteriormente se configuro para ser visitada por gerentes estándo conectados a la red privada.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="caracteristicas">
+        <h2>Auxiliar de Sistemas</h2>
+        
+        <div class="highlight">
+            <h3>Me incorpore a INTERCARTON como analista de Datos SQL Server en puesto de Auxiliar de sistemas soy Ingeniero en Sistemas Computacionales con formación en Bases de datos relacionales.</h3>
+            <p>Me apasiona el mundo de los datos por lo que me especialize para ser DBA de bases de datos relacionales entre a esta empresa por que contaba con los requisitos de lo que la empresa estaba buscando analista de bases de datos SQL.
+                Soy un profesional proactivo y orientado a resultados, con pasión por la tecnología y constante actualización en las últimas tendencias del sector.<br> 
+                Mi formación académica combinada con experiencia práctica me ha permitido desarrollar competencias sólidas en:<br>
+                <br>
+                •	Administración de Bases de Datos: Gestión avanzada de SQL Server MySQL y Oracle<br>
+                •	Administración de Sistemas: Experiencia en entornos Linux y Windows Server<br>
+                •	Seguridad Informática: Implementación de medidas de protección y análisis de vulnerabilidades<br>
+                •	Resolución de problemas: Capacidad analítica para identificar y solucionar incidencias técnicas<br>
+            </p>
+            <img src="img/SQL Serverlogo.jpg" alt="Administración de bases de datos SQL Server" class="screenshot" data-caption="Trabaje con SQL Server">
+        </div>
+        
+        <div class="highlight">
+            <h3>PROYECTO DESTACADO</h3>
+            <p>Cree y Diseñe un software de Recursos Humanos en donde genere una base de datos en SQL Server e implemente a este software para dejarlos en producción configurando lo necesario dentro del servidor para tener mejor rendimiento cuidado y protección de datos sencibles, para este proyecto desarrolle este software en Python Utilizando Flask y otras herramientas. </p>
+            <h3>Descripción general</h3>
+            <p>Es una aplicación web desarrollada con Flask que optimiza la gestión de personal de la empresa INTERCARTON. Permite registrar, consultar y modificar Información del personal, como los datos personales, historial laboral, asistencias, y desempeño, además de gestión de vacaciones.</p>
+            <h3>Tecnologías utilizadas</h3>
+            <ul>
+                <li><B>Python</B> como Lenguaje de programación principal.</li>
+                <li><B>Flask</B> para la creación del backend web.</li>
+                <li><B>Jinja2</B> para las plantillas HTML.</li>
+                <li><B>SQL Server</B> como base de datos</li>
+                <li><B>HTML/CSS</B> y <B>Bootstrap</B> para el diseño del frontend.</li>
+            </ul>
+            <img src="img/RH.jpg" alt="RH" class="screenshot" data-caption="Software RH">
+        </div>
+    </section>
+
+    <section id="requisitos">
+        <h2>Actividades más realizadas con frecuencia.</h2>
+        
+        <h3>Consultas DML, DDL, T-SQL  SQL Server</h3>
+        <p>Como buscaban analista de Base de datos se me asignaban tareas de Reportes muy complejos sobre análisis de datos en SQL Server para posteriormente cargarlos archivos CSV en donde  aplicaba limpieza de datos en excel para tener mejor eficiencia a la hora de hacer calulos y posteriormente entregar reportes a jefes Inmediatos de diferentes areas.</p>
+        <ul>
+            <li>Revisión y actualización de Procedimientos almacenados (Stored Procedure)</li>
+            <li>Consultas de mas de 50,000 registros con manejo de Peformormance para mejorar la eficiencia y velocidad de respuesta del servidor</li>
+            <li>Realizaba backups de la base de datos para hacer pruebas en modulos de ERP intelisis y agregar funcionalidades a facturas y posteriormente con jefe de facturación se autorizaba y se implementaba en producción.</li>
+            <li>Restauración de bases de datos para confirmar cambios de actualización.</li>
+            <li>Backups atomaticos para respaldo de Información en servidor de datos y en la nube.</li>
+        </ul>
+        
+        <h3>Tecnologías Utilizadas</h3>
+        <img src="./Ing/CONSULTASQL.jpg" alt="Tecnologías utilizadas" class="feature-img" data-caption="Stack tecnológico utilizado en el desarrollo">
+    </section>
+
+    <section id="imagenes">
+        <h2>REDES</h2>
+        
+        <h3>Otras actividades</h3>
+        <p>Además de anánlisis de datos tambien realize tareas de conexión de red ponchado de cable RJ45, para conexión a nodos de red, administración de equipos conectados a diferentes redes, así como  mantenimiento de impresoras</p>
+        <ul>
+            <li>onfiguración de nuevos equipos de computo a impresoras mediante TCP/IP.</li>
+            <li>Configuración de telefonía mediante conexión a internet</li>
+            <li>Alta disponibilidad de servidores en casos de perdida de conexión etc.</li>
+            <li>Documentación de procesos y mantenimiento a páginas web de la empresa.</li>
+        </ul>
+        
+        <h3>Configuración de impresoras</h3>
+        <div class="grid">
+            <div>
+                <img src="./Ing/ConfigIMPRESORA.jpg" alt="Configuración de impresoras" class="screenshot" data-caption="impresoras por TCP/IP">
+                <p><em>Por cada departamento se configuraba impresoras a equipos de trabajo.</em></p>
+            </div>
+            <div>
+                <img src="./Ing/CambioCable.jpg" alt="Red" class="screenshot" data-caption="Mantenimiento de cableado de red.">
+                <p><em>Cambios de cableado de la instalación.</em></p>
+            </div>
+        </div>
+    </section>
+    <button onclick="location.href='index.html#experiencia';" style="padding: 10px 10px; width: 100px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;">Volver</button>
+    <footer>
+        <p>Documentación actualizada José Manuel Dionicio Zepeda</p>
+        <p>Está Información no compromete a ninguna empresa.</p>
+    </footer>
+
+    <script>
+        // Función para abrir el modal de imagen
+        function openModal(imgElement) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = imgElement.src;
+            modalImg.alt = imgElement.alt;
+            
+            // Usar el atributo data-caption si existe, sino usar el alt
+            const caption = imgElement.getAttribute('data-caption') || imgElement.alt;
+            modalCaption.textContent = caption;
+            
+            // Prevenir scroll del body cuando el modal está abierto
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar event listeners a todas las imágenes con clase screenshot, feature-img o zoomable
+            const zoomableImages = document.querySelectorAll('.screenshot, .feature-img, .zoomable');
+            
+            zoomableImages.forEach(function(img) {
+                img.addEventListener('click', function() {
+                    openModal(this);
+                });
+                
+                // Agregar hint visual
+                img.style.position = 'relative';
+            });
+
+            // Cerrar modal al hacer click en la X
+            document.querySelector('.close').addEventListener('click', closeModal);
+
+            // Cerrar modal al hacer click fuera de la imagen
+            document.getElementById('imageModal').addEventListener('click', function(e) {
+                if (e.target === this || e.target === document.getElementById('modalImage')) {
+                    closeModal();
+                }
+            });
+
+            // Cerrar modal con la tecla ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

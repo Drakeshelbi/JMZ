@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación del Sitio Web - [CRM-Flask]</title>
+    <link rel="website icon" type="png"   href="./img/file (1).png">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --accent-color: #e74c3c;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            border-bottom: 1px solid black;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            color: black;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+        }
+        
+        .screenshot, .feature-img {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .screenshot:hover, .feature-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-img {
+            max-width: 600px;
+            margin: 1rem auto;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 0.3s ease;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: #fff;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close:hover,
+        .close:focus {
+            background: rgba(0, 0, 0, 0.8);
+            text-decoration: none;
+        }
+        
+        .modal-caption {
+            text-align: center;
+            color: #fff;
+            margin-top: 15px;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .zoom-hint {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .card img:hover {
+            transform: scale(1.05);
+        }
+        
+        .color-swatch {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .highlight {
+            background-color: #fffde7;
+            padding: 15px;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: #777;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 10px;
+                max-width: 95%;
+                max-height: 95%;
+            }
+            
+            .close {
+                font-size: 28px;
+                width: 40px;
+                height: 40px;
+                top: 5px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="./img/file (1).png" alt="Logo">
+                <h1 style="font-family: 'Bell MT', serif;">DRAKE.. | Experiencia Laboral</h1>
+            </div>
+             <p>Documentación de CRM-Flask - funcionalidades e ilustraciones.</p>
+    </header>
+
+    <!-- Modal para visualizar imágenes -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="zoom-hint">Click para cerrar</div>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <section id="introduccion">
+        <h2>1. Introducción</h2>
+        <p>Este documento proporciona una visión general completa del sitio web [CRM-Flask], incluyendo su estructura, diseño, funcionalidades y requisitos técnicos.</p>
+        
+        <img src="./img/CRM-Dasboard.jpg" alt="Captura de pantalla de la página principal" class="screenshot" data-caption="Vista previa de la página principal de el CRM en esta ocasión te muestra el dashborad de tus actividades.">
+        <p class="caption"><em>Figura 1: Vista previa de la página principal de el CRM en esta ocasión te muestra el dashboard de tus actividades.</em></p>
+    </section>
+
+    <section id="objetivos">
+        <h2>2. Objetivos del CRM</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./img/CRM-Clientes.jpg" alt="Gestión de clientes" class="zoomable" data-caption="Módulo de gestión de clientes del CRM">
+                <h3>Administrar clientes potenciales</h3>
+                <p>El sitio está diseñado para captar la atención de nuestro público objetivo y convertirlos en leads calificados.</p>
+            </div>
+            <div class="card">
+                <img src="./img/CRM-Marketing.jpg" alt="Marketing y campañas" class="zoomable" data-caption="Panel de marketing y gestión de campañas">
+                <h3>Gestionar tus campañas de Marketing</h3>
+                <p>Presentación visual atractiva de nuestro panel de administración de Marketing en donde puedes crear y monitorear tus resultados</p>
+            </div>
+            <div class="card">
+                <img src="./img/CRM-Reportes.jpg" alt="Modulo de reportes" class="zoomable" data-caption="Panel de reportes de cualquier departamento">
+                <h3>Generar tus reportes</h3>
+                <p>Diseño profesional de tus propios reportes dentro del CRM podrás crear reportes sobre clientes, ganancias etc.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="caracteristicas">
+        <h2>3. Características Principales</h2>
+        
+        <div class="highlight">
+            <h3>Apartado Empleados</h3>
+            <p>En este apartado te permita administrar tus empleados para tener mayor fluidez en cuanto a organización de la empresa.</p>
+            <img src="./img/CRM-Empleados.jpg" alt="Panel Empleados" class="screenshot">
+        </div>
+        
+        <div class="highlight">
+            <h3>Diseño de Bases de Datos</h3>
+            <p>Acontinuación se muestra un D-E Básico de la base de datos.</p>
+            <img src="./img/CRM-E-R.jpg" alt="Diseño de Base de Datos" class="screenshot">
+        </div>
+    </section>
+
+    <section id="requisitos">
+        <h2>4. Requisitos Técnicos</h2>
+        
+        <h3>Herramientas</h3>
+        <p>Partes que forman este proyecto:</p>
+        <ul>
+            <li>Python</li>
+            <li>Flask como Framework</li>
+            <li>SQL Server con Driver Pyodbc</li>
+            <li>HTML y CSS</li>
+            <li>Js</li>
+        </ul>
+        
+        <h3>Tecnologías Utilizadas</h3>
+        <img src="./img/HerramientasUsadas.png" alt="Tecnologías utilizadas" class="feature-img" data-caption="Herramientas usadas">
+    </section>
+
+    <section id="imagenes">
+        <h2>Como surgió el proyecto</h2>
+        
+        <h3>CRM para automatizar empresa.</h3>
+        <p>Objetivos:</p>
+        <ul>
+            <li>Desarrollar un CRM que conectara a una base de datos y mantuviera seguro los datos de la empresa ya que no contaban con un sistema de resguardo de datos.</li>
+            <li>Este CRM debería de poder crear campañas de Marketing en donde los usuarios de Ventas desarrollarán campañas para generar más ventas de su servicio.</li>
+            <li>El crm debería ser localmente para administración de los encargados del despacho de este negocio se debería de implementar las mejores prácticas de seguridad.</li>
+            <li>Debe de ser muy intuitivo y fácil de manejar por cada empleado del  diferente departamento.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>Documentación actualizada de [CRM-Drake..] | CRM y Base de Datos</p>
+    </footer>
+<button onclick="location.href='Software.html';" style="padding: 10px 10px; width: 100px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;">Volver</button>
+    <script>
+        // Función para abrir el modal de imagen
+        function openModal(imgElement) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = imgElement.src;
+            modalImg.alt = imgElement.alt;
+            
+            // Usar el atributo data-caption si existe, sino usar el alt
+            const caption = imgElement.getAttribute('data-caption') || imgElement.alt;
+            modalCaption.textContent = caption;
+            
+            // Prevenir scroll del body cuando el modal está abierto
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar event listeners a todas las imágenes con clase screenshot, feature-img o zoomable
+            const zoomableImages = document.querySelectorAll('.screenshot, .feature-img, .zoomable');
+            
+            zoomableImages.forEach(function(img) {
+                img.addEventListener('click', function() {
+                    openModal(this);
+                });
+                
+                // Agregar hint visual
+                img.style.position = 'relative';
+            });
+
+            // Cerrar modal al hacer click en la X
+            document.querySelector('.close').addEventListener('click', closeModal);
+
+            // Cerrar modal al hacer click fuera de la imagen
+            document.getElementById('imageModal').addEventListener('click', function(e) {
+                if (e.target === this || e.target === document.getElementById('modalImage')) {
+                    closeModal();
+                }
+            });
+
+            // Cerrar modal con la tecla ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

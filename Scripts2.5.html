@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scripts Esenciales para DBA Master</title>
+    <link rel="website icon" type="png"   href="./img/file (1).png">
+    <style>
+        :root {
+            --primary-color: #34495e;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --code-bg: #282c34;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+        }
+        
+        h4 {
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
+        
+        .tab-container {
+            display: flex;
+            margin-bottom: -1px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border-bottom: 1px solid white;
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 0 5px 5px 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .code-container {
+            position: relative;
+            margin: 15px 0;
+        }
+        
+        .code-block {
+            background-color: var(--code-bg);
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            position: relative;
+            line-height: 1.5;
+            white-space: pre;
+        }
+        
+        .code-block::before {
+            content: attr(data-language);
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2px 8px;
+            font-size: 0.8em;
+            border-radius: 0 0 0 5px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .code-buttons {
+            position: absolute;
+            top: 0;
+            right: 40px;
+            display: flex;
+        }
+        
+        .copy-btn, .image-btn {
+            background-color: var(--dark-color);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 2px 8px;
+            font-size: 0.8em;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .copy-btn:hover, .image-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .copy-btn:active {
+            background-color: var(--success-color);
+        }
+        
+        .code-image {
+            display: none;
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .code-image.show {
+            display: block;
+        }
+        
+        .sql-keyword {
+            color: #C678DD; /* purple */
+        }
+        
+        .sql-function {
+            color: #61AFEF; /* blue */
+        }
+        
+        .sql-string {
+            color: #98C379; /* green */
+        }
+        
+        .sql-number {
+            color: #D19A66; /* orange */
+        }
+        
+        .sql-comment {
+            color: #7F848E; /* gray */
+            font-style: italic;
+        }
+        
+        .note {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-left: 4px solid var(--secondary-color);
+            margin: 15px 0;
+        }
+        
+        .warning {
+            background-color: #fef9e7;
+            padding: 15px;
+            border-left: 4px solid var(--warning-color);
+            margin: 15px 0;
+        }
+        
+        .success {
+            background-color: #e8f8f5;
+            padding: 15px;
+            border-left: 4px solid var(--success-color);
+            margin: 15px 0;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: 5px;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 120px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="font-family: 'Bell MT', serif;">Scripts Esenciales para DBA en SQL Server</h1>
+        <p>Paquete completo de consultas SQL, procedimientos y comandos Git</p>
+    </header>
+    
+    <section>
+        <h2>Consultas de Evaluación Inicial</h2>
+        
+        <div class="tab-container">
+            <div class="tab active" onclick="openTab(event, 'server-info')">Info del Servidor</div>
+            <div class="tab" onclick="openTab(event, 'db-info')">Info de Bases de Datos</div>
+            <div class="tab" onclick="openTab(event, 'config-info')">Configuraciones</div>
+        </div>
+        
+        <div id="server-info" class="tab-content active">
+            <h3>Información Básica del Servidor</h3>
+            
+            <div class="code-container">
+                <div class="code-buttons">
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                </div>
+                <div class="code-block" data-language="SQL">
+-- Versión de SQL Server
+SELECT @@VERSION AS 'SQL Server Version';
+
+-- Información del servidor
+SELECT 
+    SERVERPROPERTY('MachineName') AS 'Machine Name',
+    SERVERPROPERTY('ServerName') AS 'Server Name',
+    SERVERPROPERTY('InstanceName') AS 'Instance',
+    SERVERPROPERTY('Edition') AS 'Edition',
+    SERVERPROPERTY('ProductLevel') AS 'Product Level',
+    SERVERPROPERTY('ProductVersion') AS 'Product Version';
+
+-- Uso de CPU y memoria
+SELECT 
+    cpu_count AS 'Logical CPU Count', 
+    hyperthread_ratio AS 'Hyperthread Ratio',
+    physical_memory_kb/1024 AS 'Physical Memory (MB)',
+    sqlserver_start_time AS 'SQL Server Start Time'
+FROM sys.dm_os_sys_info;</div>
+                <img src="./img//api/placeholder/800/400" alt="Diagrama de Información del Servidor" class="code-image" />
+            </div>
+            
+            <div class="note">
+                <strong>Nota:</strong> Estas consultas proporcionan información fundamental sobre el entorno SQL Server al que estás conectado.
+            </div>
+        </div>
+        
+        <div id="db-info" class="tab-content">
+            <h3>Información de Bases de Datos</h3>
+            
+            <div class="code-container">
+                <div class="code-buttons">
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                </div>
+                <div class="code-block" data-language="SQL">
+-- Lista todas las bases de datos con información clave
+SELECT 
+    name AS 'Database Name',
+    recovery_model_desc AS 'Recovery Model',
+    state_desc AS 'State',
+    compatibility_level AS 'Compatibility Level',
+    user_access_desc AS 'User Access',
+    size/128.0 AS 'Size (MB)',
+    create_date AS 'Creation Date'
+FROM sys.databases
+ORDER BY name;
+
+-- Tamaño de archivos por base de datos
+SELECT 
+    DB_NAME(database_id) AS 'Database',
+    name AS 'Logical Name',
+    type_desc AS 'File Type',
+    size/128.0 AS 'Size (MB)',
+    max_size/128.0 AS 'Max Size (MB)',
+    growth AS 'Growth (MB)',
+    physical_name AS 'Physical Path'
+FROM sys.master_files
+ORDER BY DB_NAME(database_id), type_desc;</div>
+                <img src="./img//api/placeholder/800/400" alt="Diagrama de Bases de Datos" class="code-image" />
+            </div>
+            
+            <div class="warning">
+                <strong>Importante:</strong> Verifica especialmente las bases de datos con recovery model FULL que no tengan backups recientes.
+            </div>
+        </div>
+        
+        <div id="config-info" class="tab-content">
+            <h3>Configuraciones del Servidor</h3>
+            
+            <div class="code-container">
+                <div class="code-buttons">
+                    <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                </div>
+                <div class="code-block" data-language="SQL">
+-- Configuraciones importantes del servidor
+SELECT 
+    name AS 'Config Name',
+    value AS 'Value',
+    value_in_use AS 'Value In Use',
+    description AS 'Description'
+FROM sys.configurations
+WHERE name IN (
+    'max server memory (MB)',
+    'min server memory (MB)',
+    'cost threshold for parallelism',
+    'max degree of parallelism',
+    'optimize for ad hoc workloads',
+    'backup compression default'
+)
+ORDER BY name;
+
+-- Configuraciones de base de datos por defecto
+SELECT 
+    name AS 'Database',
+    is_auto_close_on,
+    is_auto_shrink_on,
+    is_auto_create_stats_on,
+    is_auto_update_stats_on,
+    is_auto_update_stats_async_on,
+    is_parameterization_forced
+FROM sys.databases
+ORDER BY name;</div>
+                <img src="./img//api/placeholder/800/400" alt="Diagrama de Configuraciones" class="code-image" />
+            </div>
+            
+            <div class="success">
+                <strong>Mejores prácticas:</strong> Asegúrate que 'optimize for ad hoc workloads' esté habilitado (1) en entornos con muchas consultas ad-hoc.
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Consultas de Rendimiento</h2>
+        
+        <div class="grid-container">
+            <div class="card">
+                <h3>Consultas Costosas</h3>
+                <div class="code-container">
+                    <div class="code-buttons">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                    </div>
+                    <div class="code-block" data-language="SQL">
+-- Top 20 consultas más costosas por CPU
+SELECT TOP 20
+    qs.execution_count,
+    qs.total_logical_reads/qs.execution_count AS avg_logical_reads,
+    qs.total_elapsed_time/qs.execution_count AS avg_elapsed_time,
+    qs.total_worker_time/qs.execution_count AS avg_cpu_time,
+    SUBSTRING(qt.text, (qs.statement_start_offset/2)+1,
+        ((CASE qs.statement_end_offset
+          WHEN -1 THEN DATALENGTH(qt.text)
+         ELSE qs.statement_end_offset
+         END - qs.statement_start_offset)/2)+1) AS query_text,
+    qt.dbid,
+    qt.objectid,
+    qp.query_plan
+FROM sys.dm_exec_query_stats qs
+CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) qt
+CROSS APPLY sys.dm_exec_query_plan(qs.plan_handle) qp
+ORDER BY qs.total_worker_time/qs.execution_count DESC;</div>
+                    <img src="./img//api/placeholder/800/400" alt="Diagrama de Consultas Costosas" class="code-image" />
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Índices No Utilizados</h3>
+                <div class="code-container">
+                    <div class="code-buttons">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                    </div>
+                    <div class="code-block" data-language="SQL">
+-- Índices no utilizados (lecturas = 0)
+SELECT 
+    OBJECT_NAME(i.object_id) AS TableName,
+    i.name AS IndexName,
+    i.type_desc AS IndexType,
+    s.user_seeks,
+    s.user_scans,
+    s.user_lookups,
+    s.user_updates
+FROM sys.indexes i
+INNER JOIN sys.objects o ON i.object_id = o.object_id
+LEFT JOIN sys.dm_db_index_usage_stats s ON s.object_id = i.object_id 
+    AND s.index_id = i.index_id 
+    AND s.database_id = DB_ID()
+WHERE 
+    o.type = 'U' -- Tablas de usuario
+    AND i.name IS NOT NULL
+    AND i.type_desc <> 'HEAP'
+    AND (s.user_seeks = 0 OR s.user_seeks IS NULL)
+    AND (s.user_scans = 0 OR s.user_scans IS NULL)
+    AND (s.user_lookups = 0 OR s.user_lookups IS NULL)
+ORDER BY 
+    OBJECT_NAME(i.object_id), i.name;</div>
+                    <img src="./img//api/placeholder/800/400" alt="Diagrama de Índices No Utilizados" class="code-image" />
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Bloqueos y Deadlocks</h3>
+                <div class="code-container">
+                    <div class="code-buttons">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                    </div>
+                    <div class="code-block" data-language="SQL">
+-- Sesiones bloqueadas actualmente
+SELECT 
+    tl.request_session_id,
+    wt.blocking_session_id,
+    DB_NAME(tl.resource_database_id) AS DatabaseName,
+    tl.resource_type,
+    tl.resource_associated_entity_id,
+    tl.request_mode,
+    tl.request_status,
+    st.text AS SQLText
+FROM sys.dm_tran_locks tl
+LEFT JOIN sys.dm_os_waiting_tasks wt ON tl.lock_owner_address = wt.resource_address
+LEFT JOIN sys.dm_exec_requests er ON tl.request_session_id = er.session_id
+OUTER APPLY sys.dm_exec_sql_text(er.sql_handle) st
+WHERE tl.resource_database_id = DB_ID()
+ORDER BY tl.request_session_id;
+
+-- Configurar trace de deadlocks (ejecutar en master)
+DBCC TRACEON (1222, -1);</div>
+                    <img src="./img//api/placeholder/800/400" alt="Diagrama de Bloqueos y Deadlocks" class="code-image" />
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Procedimientos Almacenados Esenciales</h2>
+        
+        <h3>sp_WhoIsActive (Versión simplificada)</h3>
+        <div class="code-container">
+            <div class="code-buttons">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+            </div>
+            <div class="code-block" data-language="SQL">
+CREATE PROCEDURE dbo.sp_WhoIsActive
+AS
+BEGIN
+    SELECT 
+        s.session_id,
+        r.status,
+        DB_NAME(r.database_id) AS database_name,
+        s.login_name,
+        s.host_name,
+        r.command,
+        r.wait_type,
+        r.wait_time,
+        r.wait_resource,
+        r.cpu_time,
+        r.logical_reads,
+        r.reads,
+        r.writes,
+        t.text AS sql_text,
+        qp.query_plan,
+        r.start_time,
+        r.percent_complete
+    FROM sys.dm_exec_sessions s
+    LEFT JOIN sys.dm_exec_requests r ON s.session_id = r.session_id
+    OUTER APPLY sys.dm_exec_sql_text(r.sql_handle) t
+    OUTER APPLY sys.dm_exec_query_plan(r.plan_handle) qp
+    WHERE s.is_user_process = 1
+    ORDER BY r.cpu_time DESC;
+END;</div>
+            <img src="./img//api/placeholder/800/400" alt="Diagrama de sp_WhoIsActive" class="code-image" />
+        </div>
+        
+        <h3>Procedimiento de Mantenimiento de Índices</h3>
+        <div class="code-container">
+            <div class="code-buttons">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+            </div>
+            <div class="code-block" data-language="SQL">
+CREATE PROCEDURE dbo.IndexMaintenance
+    @DatabaseName NVARCHAR(128),
+    @FragmentationThreshold INT = 30
+AS
+BEGIN
+    DECLARE @SQL NVARCHAR(MAX);
+    DECLARE @TableName NVARCHAR(128);
+    DECLARE @IndexName NVARCHAR(128);
+    DECLARE @SchemaName NVARCHAR(128);
+    DECLARE @Fragmentation FLOAT;
+    
+    -- Crear tabla temporal para resultados
+    CREATE TABLE #FragmentedIndexes (
+        TableName NVARCHAR(128),
+        SchemaName NVARCHAR(128),
+        IndexName NVARCHAR(128),
+        Fragmentation FLOAT
+    );
+    
+    -- Consulta para encontrar índices fragmentados
+    SET @SQL = N'
+    INSERT INTO #FragmentedIndexes
+    SELECT 
+        OBJECT_NAME(ind.object_id) AS TableName,
+        SCHEMA_NAME(obj.schema_id) AS SchemaName,
+        ind.name AS IndexName,
+        ips.avg_fragmentation_in_percent AS Fragmentation
+    FROM ' + QUOTENAME(@DatabaseName) + '.sys.dm_db_index_physical_stats(DB_ID(''' + @DatabaseName + '''), NULL, NULL, NULL, ''LIMITED'') ips
+    JOIN ' + QUOTENAME(@DatabaseName) + '.sys.indexes ind ON ips.object_id = ind.object_id AND ips.index_id = ind.index_id
+    JOIN ' + QUOTENAME(@DatabaseName) + '.sys.objects obj ON ind.object_id = obj.object_id
+    WHERE 
+        ips.avg_fragmentation_in_percent > ' + CAST(@FragmentationThreshold AS NVARCHAR(10)) + '
+        AND ind.name IS NOT NULL
+        AND obj.type = ''U''
+    ORDER BY ips.avg_fragmentation_in_percent DESC;';
+    
+    EXEC sp_executesql @SQL;
+    
+    -- Procesar cada índice fragmentado
+    DECLARE IndexCursor CURSOR FOR
+    SELECT SchemaName, TableName, IndexName, Fragmentation
+    FROM #FragmentedIndexes;
+    
+    OPEN IndexCursor;
+    FETCH NEXT FROM IndexCursor INTO @SchemaName, @TableName, @IndexName, @Fragmentation;
+    
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        PRINT 'Procesando índice: ' + @SchemaName + '.' + @TableName + '.' + @IndexName + ' (Fragmentación: ' + CAST(@Fragmentation AS NVARCHAR(10)) + '%)';
+        
+        IF @Fragmentation > 30
+        BEGIN
+            -- Rebuild para fragmentación alta
+            SET @SQL = 'ALTER INDEX ' + QUOTENAME(@IndexName) + ' ON ' + QUOTENAME(@DatabaseName) + '.' + QUOTENAME(@SchemaName) + '.' + QUOTENAME(@TableName) + ' REBUILD;';
+            EXEC sp_executesql @SQL;
+            PRINT '   REBUILD ejecutado';
+        END
+        ELSE
+        BEGIN
+            -- Reorganize para fragmentación moderada
+            SET @SQL = 'ALTER INDEX ' + QUOTENAME(@IndexName) + ' ON ' + QUOTENAME(@DatabaseName) + '.' + QUOTENAME(@SchemaName) + '.' + QUOTENAME(@TableName) + ' REORGANIZE;';
+            EXEC sp_executesql @SQL;
+            PRINT '   REORGANIZE ejecutado';
+        END
+        
+        FETCH NEXT FROM IndexCursor INTO @SchemaName, @TableName, @IndexName, @Fragmentation;
+    END
+    
+    CLOSE IndexCursor;
+    DEALLOCATE IndexCursor;
+    
+    DROP TABLE #FragmentedIndexes;
+END;</div>
+            <img src="./img//api/placeholder/800/400" alt="Diagrama de Mantenimiento de Índices" class="code-image" />
+        </div>
+    </section>
+    
+    <section>
+        <h2>Scripts de Backup y Restauración</h2>
+        
+        <div class="grid-container">
+            <div class="card">
+                <h3>Backup Completo</h3>
+                <div class="code-container">
+                    <div class="code-buttons">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                    </div>
+                    <div class="code-block" data-language="SQL">
+-- Backup completo con compresión y verificación
+DECLARE @BackupPath NVARCHAR(255) = 'C:\Backups\' + DB_NAME() + '_' + 
+    REPLACE(REPLACE(REPLACE(CONVERT(VARCHAR, GETDATE(), 120), '-', ''), ' ', '_'), ':', '') + '.bak';
+
+BACKUP DATABASE [YourDatabase] 
+TO DISK = @BackupPath
+WITH 
+    COMPRESSION,
+    STATS = 10,
+    CHECKSUM,
+    COPY_ONLY;
+
+-- Verificar el backup
+RESTORE VERIFYONLY 
+FROM DISK = @BackupPath
+WITH CHECKSUM;</div>
+                    <img src="./img//api/placeholder/800/400" alt="Diagrama de Backup Completo" class="code-image" />
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Backup Diferencial</h3>
+                <div class="code-container">
+                    <div class="code-buttons">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                    </div>
+                    <div class="code-block" data-language="SQL">
+-- Backup diferencial
+DECLARE @DiffBackupPath NVARCHAR(255) = 'C:\Backups\' + DB_NAME() + 'Diff' + 
+    REPLACE(REPLACE(REPLACE(CONVERT(VARCHAR, GETDATE(), 120), '-', ''), ' ', '_'), ':', '') + '.bak';
+
+BACKUP DATABASE [YourDatabase]
+TO DISK = @DiffBackupPath
+WITH 
+    DIFFERENTIAL,
+    COMPRESSION,
+    STATS = 10,
+    CHECKSUM;</div>
+                    <img src="./img//api/placeholder/800/400" alt="Diagrama de Backup Diferencial" class="code-image" />
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Restauración de Base de Datos</h3>
+                <div class="code-container">
+                    <div class="code-buttons">
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+                    </div>
+                    <div class="code-block" data-language="SQL">
+-- Restaurar con reemplazo y recuperación
+USE [master];
+GO
+
+ALTER DATABASE [YourDatabase] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+GO
+
+RESTORE DATABASE [YourDatabase] 
+FROM DISK = 'C:\Backups\YourDatabase_Full.bak'
+WITH 
+    FILE = 1,
+    MOVE 'YourDatabase_Data' TO 'C:\Data\YourDatabase.mdf',
+    MOVE 'YourDatabase_Log' TO 'C:\Data\YourDatabase.ldf',
+    REPLACE,
+    STATS = 10,
+    RECOVERY;
+
+ALTER DATABASE [YourDatabase] SET MULTI_USER;
+GO</div>
+                    <img src="./img//api/placeholder/800/400" alt="Diagrama de Restauración de BD" class="code-image" />
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Gestión con Git para DBAs</h2>
+        
+        <h3>Configuración Inicial</h3>
+        <div class="code-container">
+            <div class="code-buttons">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+            </div>
+            <div class="code-block" data-language="Bash">
+# Configurar usuario global de Git
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu.email@empresa.com"
+
+# Configurar editor preferido (opcional)
+git config --global core.editor "code --wait"  # Para VS Code
+
+# Crear un alias útil para el estado
+git config --global alias.st "status -s"</div>
+            <img src="./img//api/placeholder/800/400" alt="Diagrama de Configuración Git" class="code-image" />
+        </div>
+        
+        <h3>Flujo de Trabajo Básico</h3>
+        <div class="code-container">
+            <div class="code-buttons">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+            </div>
+            <div class="code-block" data-language="Bash">
+# Inicializar un nuevo repositorio
+mkdir dba-scripts
+cd dba-scripts
+git init
+
+# Crear estructura de directorios
+mkdir scripts backups documentation schemas
+
+# Crear archivo .gitignore para archivos no deseados
+echo "# Ignorar archivos de backup SQL" > .gitignore
+echo "*.bak" >> .gitignore
+echo "*.trn" >> .gitignore
+echo "*.ldf" >> .gitignore
+echo "*.mdf" >> .gitignore
+echo "*.ndf" >> .gitignore
+
+# Añadir y confirmar cambios
+git add .
+git commit -m "Estructura inicial del repositorio DBA"
+
+# Conectar con un repositorio remoto (GitHub, Azure DevOps, etc.)
+git remote add origin https://github.com/tuusuario/dba-scripts.git
+git push -u origin main</div>
+            <img src="./img//api/placeholder/800/400" alt="Diagrama de Flujo de Trabajo Git" class="code-image" />
+        </div>
+        
+        <h3>Comandos Avanzados Útiles</h3>
+        <div class="code-container">
+            <div class="code-buttons">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+            </div>
+            <div class="code-block" data-language="Bash">
+# Ver historial de cambios
+git log --oneline --graph --all
+
+# Crear una nueva rama para un cambio específico
+git checkout -b feature/index-optimization
+
+# Fusionar cambios a la rama principal
+git checkout main
+git merge feature/index-optimization
+
+# Guardar cambios temporalmente (stash)
+git stash save "Trabajo en progreso antes de cambiar de rama"
+
+# Recuperar cambios guardados
+git stash pop
+
+# Revertir cambios no confirmados
+git checkout -- nombre_archivo.sql
+
+# Crear un tag para una versión importante
+git tag -a v1.0.0 -m "Versión estable inicial"
+git push origin v1.0.0</div>
+            <img src="./img//api/placeholder/800/400" alt="Diagrama de Comandos Git Avanzados" class="code-image" />
+        </div>
+    </section>
+    
+    <section>
+        <h2>Triggers y Funciones Útiles</h2>
+        
+        <h3>Trigger de Auditoría para Cambios</h3>
+        <div class="code-container">
+            <div class="code-buttons">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+            </div>
+            <div class="code-block" data-language="SQL">
+CREATE TABLE dbo.AuditLog (
+    AuditLogID INT IDENTITY(1,1) PRIMARY KEY,
+    TableName NVARCHAR(128),
+    OperationType CHAR(1), -- 'I'=Insert, 'U'=Update, 'D'=Delete
+    PrimaryKeyValue NVARCHAR(255),
+    OldData NVARCHAR(MAX),
+    NewData NVARCHAR(MAX),
+    ChangedBy NVARCHAR(128),
+    ChangeDate DATETIME DEFAULT GETDATE()
+);
+
+CREATE TRIGGER tr_AuditCustomerChanges
+ON dbo.Customers
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Para INSERTS
+    IF EXISTS (SELECT * FROM inserted) AND NOT EXISTS (SELECT * FROM deleted)
+    BEGIN
+        INSERT INTO dbo.AuditLog (TableName, OperationType, PrimaryKeyValue, NewData, ChangedBy)
+        SELECT 
+            'Customers',
+            'I',
+            CAST(i.CustomerID AS NVARCHAR(255)),
+            (SELECT * FROM inserted AS i FOR JSON AUTO),
+            SYSTEM_USER
+        FROM inserted i;
+    END
+    
+    -- Para DELETES
+    IF EXISTS (SELECT * FROM deleted) AND NOT EXISTS (SELECT * FROM inserted)
+    BEGIN
+        INSERT INTO dbo.AuditLog (TableName, OperationType, PrimaryKeyValue, OldData, ChangedBy)
+        SELECT 
+            'Customers',
+            'D',
+            CAST(d.CustomerID AS NVARCHAR(255)),
+            (SELECT * FROM deleted AS d FOR JSON AUTO),
+            SYSTEM_USER
+        FROM deleted d;
+    END
+    
+    -- Para UPDATES
+    IF EXISTS (SELECT * FROM inserted) AND EXISTS (SELECT * FROM deleted)
+    BEGIN
+        INSERT INTO dbo.AuditLog (TableName, OperationType, PrimaryKeyValue, OldData, NewData, ChangedBy)
+        SELECT 
+            'Customers',
+            'U',
+            CAST(i.CustomerID AS NVARCHAR(255)),
+            (SELECT * FROM deleted AS d WHERE d.CustomerID = i.CustomerID FOR JSON AUTO),
+            (SELECT * FROM inserted AS i2 WHERE i2.CustomerID = i.CustomerID FOR JSON AUTO),
+            SYSTEM_USER
+        FROM inserted i;
+    END
+END;</div>
+            <img src="./img//api/placeholder/800/400" alt="Diagrama de Trigger de Auditoría" class="code-image" />
+        </div>
+        
+        <h3>Función para Generar Scripts de Objetos</h3>
+        <div class="code-container">
+            <div class="code-buttons">
+                <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                <button class="image-btn" onclick="toggleImage(this)">Ver Diagrama</button>
+            </div>
+            <div class="code-block" data-language="SQL">
+CREATE FUNCTION dbo.GenerateObjectScript (@ObjectName NVARCHAR(255), @ObjectType NVARCHAR(50))
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @Script NVARCHAR(MAX);
+    
+    IF @ObjectType = 'TABLE'
+    BEGIN
+        SELECT @Script = 
+            'CREATE TABLE ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(name) + ' (' + CHAR(13) + CHAR(10) +
+            STUFF((
+                SELECT ',' + CHAR(13) + CHAR(10) + '    ' + 
+                       QUOTENAME(c.name) + ' ' + 
+                       tp.name + 
+                       CASE 
+                           WHEN tp.name IN ('varchar', 'nvarchar', 'char', 'nchar') THEN '(' + 
+                               CASE WHEN c.max_length = -1 THEN 'MAX' ELSE CAST(c.max_length AS VARCHAR) END + ')'
+                           WHEN tp.name IN ('decimal', 'numeric') THEN '(' + CAST(c.precision AS VARCHAR) + ',' + CAST(c.scale AS VARCHAR) + ')'
+                           ELSE ''
+                       END + ' ' +
+                       CASE WHEN c.is_nullable = 0 THEN 'NOT NULL' ELSE 'NULL' END
+                FROM sys.columns c
+                JOIN sys.types tp ON c.user_type_id = tp.user_type_id
+                WHERE c.object_id = OBJECT_ID(@ObjectName)
+                ORDER BY c.column_id
+                FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 2, '') + CHAR(13) + CHAR(10) + ');'
+        FROM sys.tables
+        WHERE object_id = OBJECT_ID(@ObjectName);
+    END
+    ELSE IF @ObjectType = 'PROCEDURE'
+    BEGIN
+        SELECT @Script = OBJECT_DEFINITION(OBJECT_ID(@ObjectName));
+    END
+    
+    RETURN @Script;
+END;</div>
+            <img src="/api/placeholder/800/400" alt="Diagrama de Función de Generación de Scripts" class="code-image" />
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container header-container">
+            <div class="logo">
+                <br>
+                <br>
+                <br>
+                <br>
+                <img src="./img/file (1).png" alt="Logo">
+                <h1  style="font-family: 'Bell MT', serif;">DRAKE.. | DBA (Administrador de Bases de Datos) </h1>
+            </div>
+        <p>Espero te esta guía te ayude a reforsar tus habilidades como DBA</p>
+        <p>Este paquete debe ser adaptado a las necesidades específicas de cada entorno y actualizado periódicamente.</p>
+    </footer>
+    
+    <script>
+        function openTab(evt, tabName) {
+            // Oculta todos los contenidos de pestañas
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Desactiva todas las pestañas
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Activa la pestaña y contenido seleccionados
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        function copyCode(btn) {
+            // Encuentra el bloque de código asociado al botón
+            var codeBlock = btn.closest('.code-container').querySelector('.code-block');
+            
+            // Crea un elemento de texto temporal
+            var tempElement = document.createElement('textarea');
+            tempElement.value = codeBlock.textContent;
+            document.body.appendChild(tempElement);
+            
+            // Selecciona y copia el contenido
+            tempElement.select();
+            document.execCommand('copy');
+            
+            // Elimina el elemento temporal
+            document.body.removeChild(tempElement);
+            
+            // Cambia temporalmente el texto del botón
+            var originalText = btn.textContent;
+            btn.textContent = "¡Copiado!";
+            btn.style.backgroundColor = "#2ecc71";
+            
+            // Restaura el texto original después de un tiempo
+            setTimeout(function() {
+                btn.textContent = originalText;
+                btn.style.backgroundColor = "";
+            }, 1500);
+        }
+        
+        function toggleImage(btn) {
+            // Encuentra la imagen asociada al botón
+            var imgElement = btn.closest('.code-container').querySelector('.code-image');
+            
+            // Alterna la visibilidad de la imagen
+            if (imgElement.classList.contains('show')) {
+                imgElement.classList.remove('show');
+                btn.textContent = "Ver Diagrama";
+            } else {
+                imgElement.classList.add('show');
+                btn.textContent = "Ocultar Diagrama";
+            }
+        }
+        
+        // Función para aplicar resaltado de sintaxis SQL
+        function applySqlSyntaxHighlighting() {
+            const codeBlocks = document.querySelectorAll('.code-block[data-language="SQL"]');
+            
+            codeBlocks.forEach(block => {
+                let content = block.innerHTML;
+                
+                // Palabras clave SQL
+                const keywords = [
+                    'SELECT', 'FROM', 'WHERE', 'JOIN', 'AND', 'OR', 'NOT', 'ORDER BY', 'GROUP BY', 
+                    'HAVING', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'ALTER', 'DROP', 'EXEC', 
+                    'EXECUTE', 'PROCEDURE', 'FUNCTION', 'TRIGGER', 'VIEW', 'INDEX', 'TABLE', 
+                    'PRIMARY KEY', 'FOREIGN KEY', 'CONSTRAINT', 'DECLARE', 'SET', 'BEGIN', 'END',
+                    'INTO', 'VALUES', 'AS', 'ON', 'IS', 'NULL', 'LEFT', 'RIGHT', 'INNER', 'OUTER',
+                    'CROSS', 'APPLY', 'GO', 'WITH', 'TOP', 'DISTINCT', 'ALL'
+                ];
+                
+                // Funciones SQL
+                const functions = [
+                    'COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'CAST', 'CONVERT', 'SUBSTRING', 'LEN',
+                    'DATEADD', 'DATEDIFF', 'GETDATE', 'ISNULL', 'COALESCE', 'STUFF', 'REPLACE',
+                    'DB_NAME', 'OBJECT_NAME', 'SCHEMA_NAME', 'QUOTENAME', 'SERVERPROPERTY'
+                ];
+                
+                // Destacar comentarios (-- hasta el final de la línea)
+                content = content.replace(/(--.*)$/gm, '<span class="sql-comment">$1</span>');
+                
+                // Destacar palabras clave
+                keywords.forEach(keyword => {
+                    const regex = new RegExp('\\b' + keyword + '\\b', 'gi');
+                    content = content.replace(regex, match => `<span class="sql-keyword">${match}</span>`);
+                });
+                
+                // Destacar funciones
+                functions.forEach(func => {
+                    const regex = new RegExp('\\b' + func + '\\b', 'gi');
+                    content = content.replace(regex, match => `<span class="sql-function">${match}</span>`);
+                });
+                
+                // Destacar cadenas ('...')
+                content = content.replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>');
+                
+                // Destacar números
+                content = content.replace(/\b(\d+)\b/g, '<span class="sql-number">$1</span>');
+                
+                block.innerHTML = content;
+            });
+        }
+        
+        // Aplicar resaltado de sintaxis cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            applySqlSyntaxHighlighting();
+        });
+    </script>
+</body>
+</html>

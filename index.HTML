@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="font-family: 'Bell MT', serif;">DRAKE... | WEB DBA</title>
+    <link rel="website icon" type="png" href="./img/file (1).png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Aquí iría la referencia al archivo CSS que me compartiste -->
+    <style>
+        /* Estilos generales #002366 antes era este#2c3e50  */
+        :root {
+            --color-primary: #3498db;
+            --color-secondary: #2c3e50;
+            --color-accent: #1abc9c;
+            --color-light: #ecf0f1;
+            --color-dark: #34495e;
+            --color-code: #f39c12;
+            --transition: all 0.4s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            overflow-x: hidden;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* Header y navegación */
+        header {
+            background-color: var(--color-secondary);
+            padding: 48px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--color-secondary);
+            /* Fondo semitransparente */
+            transition: top 0.3s ease-in-out;
+            /* Animación suave */
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Menú principal innovador */
+        .main-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+            margin: 0 5px;
+            perspective: 1000px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .nav-item a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .nav-item a:hover::before {
+            left: 100%;
+        }
+
+        .nav-item.active a {
+            background-color: var(--color-accent);
+        }
+
+        .nav-item a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .nav-item a .icon {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        /* Sección principal */
+        main {
+            margin-top: 90px;
+            min-height: calc(100vh - 90px);
+        }
+
+        section {
+            padding: 60px 0;
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sección de inicio */
+        #inicio {
+            position: relative;
+            height: calc(100vh - 40px);
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            overflow: hidden;
+        }
+
+        .inicio-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            width: 50%;
+        }
+
+        .inicio-content h2 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .inicio-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35%;
+            max-width: 500px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(-50%) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-50%) translateX(-15px);
+            }
+
+            100% {
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        .data-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: particleMove linear infinite;
+        }
+
+        @keyframes particleMove {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-500px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Sección de perfil */
+        #perfil {
+            background-color: white;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .profile-header h2 {
+            font-size: 2.5rem;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+        }
+
+        .profile-header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .profile-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .profile-nav::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .profile-nav::-webkit-scrollbar-thumb {
+            background-color: var(--color-accent);
+            border-radius: 5px;
+        }
+
+        .profile-tab {
+            padding: 10px 20px;
+            margin: 0 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #ecf0f1;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .profile-tab:hover {
+            background-color: #d5dbdb;
+        }
+
+        .profile-tab.active {
+            background-color: var(--color-accent);
+            color: white;
+        }
+
+        .profile-content {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-tab-content {
+            display: none;
+        }
+
+        .profile-tab-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Me */
+        .about-me {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            transition: var(--transition);
+        }
+
+        .about-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--color-secondary);
+        }
+
+        .about-text p {
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .about-highlight {
+            padding: 15px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--color-primary);
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            border: 1px solid black;
+            /* Added black border */
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skill-icon i {
+            font-size: 1.8rem;
+            color: var(--color-primary);
+        }
+
+        .skill-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--color-secondary);
+        }
+
+        .skill-desc {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .skill-progress {
+            margin-top: 15px;
+            height: 6px;
+            background-color: #ecf0f1;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background-color: var(--color-accent);
+        }
+
+        /* Certificaciones */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .cert-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cert-image {
+            height: 180px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cert-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .cert-image .view-cert {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(52, 152, 219, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .cert-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .cert-image:hover .view-cert {
+            opacity: 1;
+        }
+
+        .cert-details {
+            padding: 15px;
+        }
+
+        .cert-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--color-secondary);
+        }
+
+        .cert-issuer {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .cert-date {
+            font-size: 0.85rem;
+            color: #95a5a6;
+        }
+
+        /* Modal para certificaciones */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1010;
+            overflow: auto;
+            padding-top: 60px;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 80vh;
+        }
+
+        /* Tools */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-icon {
+            height: 60px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tool-icon img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        .tool-name {
+            font-size: 1rem;
+            text-align: center;
+            color: var(--color-secondary);
+        }
+
+        /* Education */
+        .education-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .education-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background-color: var(--color-primary);
+            border-radius: 3px;
+        }
+
+        .edu-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        .edu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -30px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid var(--color-primary);
+            z-index: 1;
+        }
+
+        .edu-date {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--color-primary);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .edu-degree {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--color-secondary);
+        }
+
+        .edu-school {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #7f8c8d;
+        }
+
+        .edu-desc {
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+
+        /* Sección de Servicios */
+        #servicios {
+            background-color: #f8f9fa;
+        }
+
+        .services-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .services-header h2 {
+            font-size: 2.5rem;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+        }
+
+        .services-header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid black;
+            /* Added black border */
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--color-primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .service-icon i {
+            font-size: 2rem;
+            color: var(--color-primary);
+        }
+
+        .service-details {
+            padding: 25px;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--color-secondary);
+        }
+
+        .service-desc {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .service-link {
+            display: inline-block;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .service-link:hover {
+            color: var(--color-accent);
+            transform: translateX(5px);
+        }
+
+        /* Sección de Contacto */
+        #contacto {
+            background-color: white;
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-header {
+            margin-bottom: 30px;
+        }
+
+        .contact-header h2 {
+            font-size: 2.5rem;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+        }
+
+        .contact-header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        .contact-methods {
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .contact-icon i {
+            font-size: 1.3rem;
+            color: var(--color-primary);
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 1.1rem;
+            color: var(--color-secondary);
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            background-color: var(--color-accent);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--color-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background-color: var(--color-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header y navegación -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <br>
+                <br>
+                <br>
+                <br>
+                <img src="./img/file (1).png" alt="Logo">
+                <h1 style="font-family: 'Bell MT', serif;">DRAKE.. | DBA (Administrador de Bases de Datos)</h1>
+            </div>
+            <nav class="main-nav">
+                <div class="nav-item active">
+                    <a href="#inicio"><i class="fas fa-home icon"></i>Inicio</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#perfil"><i class="fas fa-user icon"></i>Perfil</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#experiencia"><i class="fas fa-laptop-code icon"></i>Experiencia</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#contacto"><i class="fas fa-envelope icon"></i>Contacto</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+        <!-- Sección de inicio -->
+        <section id="inicio" class="active">
+            <div class="container">
+                <div class="inicio-content">
+                    <h2>Descubre cómo los datos están cambiando el mundo.</h2>
+                    <p>Soy un analista de datos con experiencia en transformar información compleja en insights
+                        accionables que ayudan a las empresas a tomar mejores decisiones. Especializado en  lenguaje SQL, como DBA jr y
+                        visualización de datos.</p>
+                </div>
+            </div>
+            <img src="./img/file (1).png" alt="Data Analysis Illustration" class="hero-image">
+            <div class="data-particles" id="particles"></div>
+        </section>
+
+        <!-- Sección de perfil -->
+        <section id="perfil">
+            <div class="container">
+                <div class="profile-header">
+                    <h2>Mi Perfil Profesional</h2>
+                    <p>Descubre mi trayectoria, habilidades y recursos que me permiten ofrecer soluciones de análisis de
+                        datos efectivas y personalizadas para cada cliente.</p>
+                </div>
+                <div class="profile-nav">
+                    <button class="profile-tab" data-tab="skills">Habilidades</button>
+                    <button class="profile-tab" data-tab="tools">Herramientas</button>
+                    <button class="profile-tab" data-tab="certificates">Certificaciones</button>
+                    <button class="profile-tab" data-tab="education">Educación</button>
+                    <button class="profile-tab active" data-tab="about">Sobre mí</button>
+                </div>
+                <div class="profile-content">
+                    <!-- About Me -->
+                    <div class="profile-tab-content about active">
+                        <div class="about-me">
+                            <div class="about-image">
+                                <img src="./img/Drake.jpg" alt="Mi foto profesional">
+                            </div>
+                            <div class="about-text">
+                                <h3>¿Quién soy?</h3>
+                                <p>Soy Ingeniero en Sistemas Computacionales especializado como DBA (Administrador de Bases de Datos)
+                                con más de 4 años de experiencia en el mundo de los datos tomando roles como desarrollador SQL,
+                                analista de datos trabajando con empresas de diversos sectores.</p>
+                                <div class="about-highlight">
+                                   A lo largo de mi experiencia profesional, he diseñado e implementado soluciones analíticas clave: desde modelos predictivos y segmentación de clientes hasta la optimización de procesos internos. 
+                                   Desarrollo dashboards interactivos a medida que automatizan flujos de trabajo y aportan claridad operativa a empresas u organizaciones
+                                </div>
+                                <p>He participado en configuración de sistemas para almacenamiento de Bases de datos en sector empresarial,
+                                cuidando la integridad y seguridad de la información e implementando alta disponibilidad para optimizar el trabajo.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="profile-tab-content skills">
+                        <div class="skills-container">
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <h4 class="skill-title">SQL Avanzado</h4>
+                                <p class="skill-desc">Dominio de consultas complejas, optimización y administración de
+                                    bases de datos relacionales.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 99%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                <h4 class="skill-title">Python</h4>
+                                <p class="skill-desc">Análisis de datos con pandas, numpy, scikit-learn y otras
+                                    bibliotecas especializadas.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h4 class="skill-title">Visualización de Datos</h4>
+                                <p class="skill-desc">Creación de dashboards interactivos y visualizaciones efectivas
+                                    con Tableau, Power BI y matplotlib.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h4 class="skill-title">Machine Learning</h4>
+                                <p class="skill-desc">Modelos predictivos, clasificación, regresión y clustering para
+                                    descubrir patrones ocultos.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 40%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <h4 class="skill-title">ETL</h4>
+                                <p class="skill-desc">Procesos de extracción, transformación y carga de datos para
+                                    preparar análisis efectivos.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fab fa-lock"></i>
+                                </div>
+                                <h4 class="skill-title">Seguridad Informática</h4>
+                                <p class="skill-desc">Seguridad de la información e implementación de politicas de
+                                    seguridad, Directorio Activo las mejores prácticas.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fab fa-code"></i>
+                                </div>
+                                <h4 class="skill-title">Desarrollo de Software</h4>
+                                <p class="skill-desc">Durante mi experiencia me he enfrentado a proyectos de
+                                    programación donde brindo soluciones y automatizo el trabajo.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <h4 class="skill-title">Comunicación de Datos</h4>
+                                <p class="skill-desc">Habilidad para transformar análisis técnicos en insights
+                                    comprensibles para todos los niveles.</p>
+                                <div class="skill-progress">
+                                    <div class="skill-progress-bar" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certificates -->
+                    <div class="profile-tab-content certificates">
+                        <div class="cert-grid">
+                            <div class="cert-card">
+                                <div class="cert-image">
+                                    <img src="./img/Ciencia.jpg" alt="Certificación Data Science">
+                                    <div class="view-cert">
+                                        <span>Ver Certificado</span>
+                                    </div>
+                                </div>
+                                <div class="cert-details">
+                                    <h4 class="cert-title">Professional Data Scientist</h4>
+                                    <p class="cert-issuer">Cisco</p>
+                                    <p class="cert-date">Mayo 2023</p>
+                                </div>
+                            </div>
+                            <div class="cert-card">
+                                <div class="cert-image">
+                                    <img src="./Ing/CERTIFICADO CARGANDO.jpg" alt="Certificación SQL">
+                                    <div class="view-cert">
+                                        <span>Ver Certificado</span>
+                                    </div>
+                                </div>
+                                <div class="cert-details">
+                                    <h4 class="cert-title">SQL Advanced Developer</h4>
+                                    <p class="cert-issuer">Oracle</p>
+                                    <p class="cert-date">Enero 2022</p>
+                                </div>
+                            </div>
+                            <div class="cert-card">
+                                <div class="cert-image">
+                                    <img src="./img/Análisis de Datos con Tableau.jpg" alt="Certificación Tableau">
+                                    <div class="view-cert">
+                                        <span>Ver Certificado</span>
+                                    </div>
+                                </div>
+                                <div class="cert-details">
+                                    <h4 class="cert-title">Análisis de Datos con Tableau</h4>
+                                    <p class="cert-issuer">Udemy</p>
+                                    <p class="cert-date">Abril 2025</p>
+                                </div>
+                            </div>
+                            <div class="cert-card">
+                                <div class="cert-image">
+                                    <img src="./img/SQL Serveer.jpg" alt="SQL Server">
+                                    <div class="view-cert">
+                                        <span>Ver Certificado</span>
+                                    </div>
+                                </div>
+                                <div class="cert-details">
+                                    <h4 class="cert-title">SQL Server</h4>
+                                    <p class="cert-issuer">Udemy</p>
+                                    <p class="cert-date">Noviembre 2024</p>
+                                </div>
+                            </div>
+                            <div class="cert-card">
+                                <div class="cert-image">
+                                    <img src="./img/Aura1.jpg" alt="Certificación Alura Latam">
+                                    <div class="view-cert">
+                                        <span>Ver Certificado</span>
+                                    </div>
+                                </div>
+                                <div class="cert-details">
+                                    <h4 class="cert-title">Técnicas de Auto Desarrollo</h4>
+                                    <p class="cert-issuer">Oracle</p>
+                                    <p class="cert-date">Junio 2024</p>
+                                </div>
+                            </div>
+                            <div class="cert-card">
+                                <div class="cert-image">
+                                    <img src="./img/Diplomado1.jpg" alt="Certificación Tableau">
+                                    <div class="view-cert">
+                                        <span>Ver Certificado</span>
+                                    </div>
+                                </div>
+                                <div class="cert-details">
+                                    <h4 class="cert-title">Legislación Informática y Análisis Forense </h4>
+                                    <p class="cert-issuer">UniverMilenieum</p>
+                                    <p class="cert-date">Octubre 2024</p>
+                                </div>
+                            </div>
+                            <div class="cert-card">
+                                <div class="cert-image">
+                                    <img src="./Ing/CERTIFICADO CARGANDO.jpg" alt="Certificación Python">
+                                    <div class="view-cert">
+                                        <span>Ver Certificado</span>
+                                    </div>
+                                </div>
+                                <div class="cert-details">
+                                    <h4 class="cert-title">Python for Data Science</h4>
+                                    <p class="cert-issuer">IBM</p>
+                                    <p class="cert-date">Junio 2021</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tools -->
+                    <div class="profile-tab-content tools">
+                        <div class="tools-grid">
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/Pythonjpg.jpg" alt="Python">
+                                </div>
+                                <p class="tool-name">Python</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/mysql.jpg" alt="MySQL">
+                                </div>
+                                <p class="tool-name">MySQL</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/postgres.jpg" alt="PostgreSQL">
+                                </div>
+                                <p class="tool-name">PostgreSQL</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/Tablue.jpg" alt="Tableau">
+                                </div>
+                                <p class="tool-name">Tableau</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/PowerBI.JPG" alt="Power BI">
+                                </div>
+                                <p class="tool-name">Power BI</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/Execl.jpg" alt="Excel">
+                                </div>
+                                <p class="tool-name">Excel</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/R.jpg" alt="R">
+                                </div>
+                                <p class="tool-name">R</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/looker.jpg" alt="Looker">
+                                </div>
+                                <p class="tool-name">Looker Studio</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/alteryx.jpg" alt="Alteryx">
+                                </div>
+                                <p class="tool-name">Alteryx</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/SQL Serverlogo.jpg" alt="SQL Server">
+                                </div>
+                                <p class="tool-name">SQL Server</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/OracleBD.jpg" alt="Oracle DB">
+                                </div>
+                                <p class="tool-name">Oracle</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/Intelisis.jpg" alt="Intelisis">
+                                </div>
+                                <p class="tool-name">Intelisis</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/pentaho.jpg" alt="Pentaho">
+                                </div>
+                                <p class="tool-name">Pentaho</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/pandas.jpg" alt="pandas">
+                                </div>
+                                <p class="tool-name">Pandas</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/Html.jpg" alt="HTML">
+                                </div>
+                                <p class="tool-name">HTML</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/css.jpg" alt="css">
+                                </div>
+                                <p class="tool-name">css</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/flask.jpg" alt="flask">
+                                </div>
+                                <p class="tool-name">Flask</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/ORACLE NETSUIT.JPG" alt="NETSUIT">
+                                </div>
+                                <p class="tool-name">Oracle Netsuit</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/GitHub.jpg" alt="GitHub">
+                                </div>
+                                <p class="tool-name">GitHub</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/Git-logo.svg.png" alt="Git">
+                                </div>
+                                <p class="tool-name">Git</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/sap.JPG" alt="SAP">
+                                </div>
+                                <p class="tool-name">Sap</p>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <img src="./img/Jupyter.jpg" alt="Jupyter">
+                                </div>
+                                <p class="tool-name">Jupyter</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="profile-tab-content education">
+                        <div class="education-timeline">
+                            <div class="edu-item">
+                                <span class="edu-date">2024</span>
+                                <h4 class="edu-degree">Ingeniero en Sistemas Computacionales</h4>
+                                <p class="edu-school">Universidad UniverMilenieum</p>
+                                <p class="edu-desc">Diplomado en Legislación informatica y Análisis Forense</p>
+                            </div>
+                            <div class="edu-item">
+                                <span class="edu-date">2020-2025</span>
+                                <h4 class="edu-degree">Especialización DBA SQL</h4>
+                                <p class="edu-school">SQL Server, Oracle, MySQL.</p>
+                                <p class="edu-desc">Formación especializada en SQL, Desarrollo de bases de datos Relacionales, SQL-Tuning, T-SQL, PL/SQL procesamiento
+                                    de datos, así como, administración de servidores de bases de datos implementando Alta disponibilidad y análisis de datos a gran escala.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SQL Demo -->
+                    <div class="profile-tab-content demo">
+                        <h3>Demostración de SQL en vivo</h3>
+                        <p>Prueba mis habilidades con esta demostración interactiva de SQL. Escribe o modifica consultas
+                            y observa los resultados en tiempo real.</p>
+                        <div class="sql-demo">
+                            <div class="sql-header">
+                                <div class="sql-title">Editor SQL</div>
+                                <div class="sql-tabs">
+                                    <div class="sql-tab active">Query 1</div>
+                                    <div class="sql-tab">Query 2</div>
+                                </div>
+                            </div>
+                            <div class="sql-body">
+                                <div class="sql-editor">
+                                    <div class="sql-line"><span class="sql-keyword">SELECT</span> e.department_name,
+                                    </div>
+                                    <div class="sql-line"> <span class="sql-keyword">COUNT</span>(e.employee_id) <span
+                                            class="sql-keyword">AS</span> employee_count,</div>
+                                    <div class="sql-line"> <span class="sql-keyword">AVG</span>(e.salary) <span
+                                            class="sql-keyword">AS</span> avg_salary</div>
+                                    <div class="sql-line"><span class="sql-keyword">FROM</span> <span
+                                            class="sql-table">employees</span> e</div>
+                                    <div class="sql-line"><span class="sql-keyword">JOIN</span> <span
+                                            class="sql-table">departments</span> d <span class="sql-keyword">ON</span>
+                                        e.department_id = d.department_id</div>
+                                    <div class="sql-line"><span class="sql-keyword">GROUP BY</span> e.department_name
+                                    </div>
+                                    <div class="sql-line"><span class="sql-keyword">HAVING</span> <span
+                                            class="sql-keyword">AVG</span>(e.salary) > 50000</div>
+                                    <div class="sql-line"><span class="sql-keyword">ORDER BY</span> avg_salary <span
+                                            class="sql-keyword">DESC</span>;</div>
+                                </div>
+                                <button class="sql-run">Ejecutar consulta</button>
+                                <div class="sql-result">
+                                    <div class="sql-result-header">
+                                        Resultados (5 filas)
+                                    </div>
+                                    <div class="sql-result-body">
+                                        <table class="sql-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>department_name</th>
+                                                    <th>employee_count</th>
+                                                    <th>avg_salary</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Ejecutivo</td>
+                                                    <td>5</td>
+                                                    <td>85,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ventas</td>
+                                                    <td>12</td>
+                                                    <td>72,500</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>TI</td>
+                                                    <td>8</td>
+                                                    <td>68,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Marketing</td>
+                                                    <td>7</td>
+                                                    <td>60,200</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Finanzas</td>
+                                                    <td>6</td>
+                                                    <td>55,400</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de mi experiencia -->
+        <section id="experiencia">
+            <div class="container">
+                <div class="services-header">
+                    <h2>Proyectos Reales.</h2>
+                    <p>A continuación se muestran algunos Proyectos con los que he trabajado en donde muestro mi desempeño en ciertas actividades como DBA y como analista de datos poniendo en práctica lo aprendido en Seguridad informática.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3 class="service-title">Administración de Base de Datos</h3>
+                            <p class="service-desc">Mejora del rendimiento y estructura de bases de datos para facilitar
+                                el análisis y garantizar la calidad e integridad de los datos.</p>
+                            <button id="Aprendizaje"
+                                style="padding: 10px 20px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;"
+                                onclick="location.href='Aprendizaje.html';">Saber más</button>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="service-title">Análisis Predictivo</h3>
+                            <p class="service-desc">Desarrollo de modelos estadísticos y de machine learning para
+                                predecir tendencias, comportamientos y resultados de negocio basados en datos
+                                históricos.</p>
+                            <button id="Aprendizaje"
+                                style="padding: 10px 20px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;"
+                                onclick="location.href='AnalisisPredictivo.html';">Saber más</button>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h3 class="service-title">Dashboards Interactivos</h3>
+                            <p class="service-desc">Creación de paneles de control personalizados que permiten
+                                visualizar KPIs clave y métricas de negocio en tiempo real para facilitar la toma de
+                                decisiones.</p>
+                            <button id="Aprendizaje"
+                                style="padding: 10px 20px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;"
+                                onclick="location.href='Dashboards.html';">Saber más</button>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 class="service-title">Soluciones de Software</h3>
+                            <p class="service-desc">Desarrollo de software busco autmomatizar tareas de administración y
+                                control de diversos sectores.</p>
+                            <button id="Aprendizaje"
+                                style="padding: 10px 20px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;"
+                                onclick="location.href='Software.html';">Saber más</button>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <h3 class="service-title">Administración de Sistemas y Seguridad Informática</h3>
+                            <p class="service-desc">Creación de tareas de flujo de trabajo para la automatización de
+                                sistemas como ERPs, Seguridad Informática nivel empresarial Active Directory, Servidores
+                                de datos.</p>
+                            <button id="Aprendizaje"
+                                style="padding: 10px 20px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;"
+                                onclick="location.href='IngenieroSistemas.html';">Saber más</button>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-details">
+                            <div class="service-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="service-title">Mis Proyectos de Formación</h3>
+                            <p class="service-desc">Desarrollo de proyectos personales como pasatiempo para desarrollar
+                                mis competencias</p>
+                            <button id="aprendizaje"
+                                style="padding: 10px 20px; background-color: #2850a7; color: white; border: none; border-radius: 5px; cursor: pointer;">Saber
+                                más</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de contacto -->
+        <section id="contacto">
+            <div class="container">
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-header">
+                            <h2>¿Hablamos?</h2>
+                            <p>Estoy disponible para proyectos freelance, consultoría y oportunidades laborales. ¡No
+                                dudes en contactarme!</p>
+                        </div>
+                        <div class="contact-methods">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <div class="contact-label">Email</div>
+                                    <div class="contact-value">Josemanueldioniciozepeda@gmail.com</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <div class="contact-label">Teléfono</div>
+                                    <div class="contact-value">+52 7291470412</div>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <div class="contact-label">Ubicación</div>
+                                    <div class="contact-value">Estado de México</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/jose-manuel-dionicio-zepeda-0531aa239?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-btn" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/Drakeshelbi" class="social-btn" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-btn" title="Medium">
+                                <i class="fab fa-medium-m"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Envíame un mensaje</h3>
+                        <form id="contactForm" action="https:formspree.io/f/Drakedrake@gmail.com" method="POST">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Nombre completo</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="name" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Asunto</label>
+                                <input type="text" id="subject" name="subject" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" class="form-label">Mensaje</label>
+                                <textarea id="message" name="message" class="form-textarea" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Enviar mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para certificaciones -->
+    <div class="modal" id="certModal">
+        <div class="modal-content">
+            <div class="modal-close">
+                <i class="fas fa-times"></i>
+            </div>
+            <img src="" alt="Certificado" id="certImg">
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad de navegación
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+
+                // Ocultar todas las secciones
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Mostrar la sección objetivo
+                document.querySelector(targetId).classList.add('active');
+
+                // Actualizar la navegación activa
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.parentElement.classList.add('active');
+
+                // Hacer scroll suave a la sección
+                document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Tabs de perfil
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                const tabId = this.getAttribute('data-tab');
+
+                // Desactivar todos los tabs
+                document.querySelectorAll('.profile-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+
+                // Desactivar todo el contenido de tabs
+                document.querySelectorAll('.profile-tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Activar el tab seleccionado
+                this.classList.add('active');
+
+                // Activar el contenido correspondiente
+                document.querySelector('.profile-tab-content.' + tabId).classList.add('active');
+            });
+        });
+
+        // Demo SQL
+        document.querySelector('.sql-run').addEventListener('click', function () {
+            document.querySelector('.sql-result').classList.add('active');
+        });
+
+        // Crear partículas de datos para la animación
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Tamaño aleatorio
+                const size = Math.random() * 5 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+
+                // Posición aleatoria
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+
+                // Color aleatorio en tonos azules / cian para representar datos
+                const blueShade = Math.floor(Math.random() * 155) + 100;
+                particle.style.backgroundColor = `rgba(0, ${blueShade}, 255, ${Math.random() * 0.5 + 0.5})`;
+
+                // Añadir partícula al contenedor
+                particlesContainer.appendChild(particle);
+
+                // Animar la particula con  GSAP
+                animateParticle(particle);
+            }
+
+        }
+
+        // Función para animar partículas indiciduales
+        function animateParticle(particle) {
+            // Duración aleatoria para cada partícula
+            const duration = Math.random() * 3 + 2;
+
+            // Animación con GSAP
+            gsap.to(particle, {
+                x: Math.random() * 200 - 100,
+                y: Math.random() * 200 - 100,
+                opacity: Math.random() * 0.5 + 0.2,
+                duration: duration,
+                ease: "power1.in0ut",
+                onComplete: function () {
+                    // Resetaer posición y comenzar nueva animación
+                    gsap.set(particle, {
+                        x: 0,
+                        y: 0,
+                        opacity: Math.random() * 0.5 + 0.5
+                    });
+                    animateParticle(particle);
+                }
+            });
+        }
+
+        // iniciar partículas cuando se carga la pagina
+        document.addEventListener('DOMContentLoaded', function () {
+            createParticles();
+
+            // Cerrar modal al hacer clic fuera del contenido
+            document.getElementById('certModal').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    this.style.dysplay('none');
+                }
+            });
+
+            //Aniamción de entrada para la seción de inicio
+            gsap.from(".inicio-content h2", {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                delay: 0.2
+            });
+
+            gsap.from(".inicio-content p", {
+                opacity: o,
+                y: 30,
+                duration: 1,
+                delay: 0.4
+            });
+
+            gsap.from(".cta-btn", {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                delay: 0.6
+            });
+
+            gsap.from(".hero-image", {
+                opacity: 0,
+                x: 50,
+                duration: 1.2,
+                delay: 0.3
+            });
+
+            // Animación al hacer scroll para las secciones
+            const sections = document.querySelector('section');
+
+            window.addEventListener('scroll', function () {
+                const scrollPosition = window.scrollY + window - innerHeight * 0.7;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+
+                    if (scrollPosition >= sectionTop && scrollPosition <= sectionBottom) {
+                        const sectionId = section.id;
+
+                        // Actualizar navegación activa
+                        document.querySelectorAll('.nav-item').forEach(item => {
+                            item.classList.remove('active');
+                            if (item.querySelector('a').getAttribute('href') === '#' + sectionId) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+        // Funcionalidad para abrir certificados en modal
+        document.querySelectorAll('.cert-card').forEach(card => {
+            card.addEventListener('click', function () {
+                const imgSrc = this.querySelector('img').getAttribute('src');
+                const modal = document.getElementById('certModal');
+                const modalImg = document.getElementById('certImg');
+
+                modalImg.setAttribute('src', imgSrc);
+                modal.style.display = 'flex';
+            });
+        });
+
+        // Cerrar el modal de certificados
+        document.querySelector('.modal-close').addEventListener('click', function () {
+            document.getElementById('certModal').style.display = 'none';
+        });
+
+        // Cerrar modal al hacer clic fuera del contenido
+        document.getElementById('certModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+
+        //Tabs de perfil
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                const tabId = this.getAttribute('data-tab');
+
+                // Desactivar todos los tabs
+                document.querySelectorAll('.profile-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+
+                // Desactivar todo el contenido de tabs
+                document.querySelectorAll('.profile-tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Activar el tab seleccionado
+                this.classList.add('active');
+
+                // Activar el contenido correspondiente
+                document.querySelector('.profile-tab-content.' + tabId).classList.add('active');
+            });
+        });
+
+        let prevScrollPos = window.pageYOffset;
+        const headerContainer = document.querySelector('.header-container'); // Selección del contenedor
+
+        window.onscroll = function () {
+            const currentScrollPos = window.pageYOffset;
+
+            if (prevScrollPos > currentScrollPos) {
+                headerContainer.style.top = "0"; // Mostrar el header
+            } else {
+                headerContainer.style.top = "-100px"; // Ocultar el header
+            }
+
+            prevScrollPos = currentScrollPos;
+        };
+
+    </script>
+</body>
+
+</html>

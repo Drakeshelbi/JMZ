@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experiencia Laboral - Administrador de Bases de Datos</title>
+    <link rel="website icon" type="png" href="./img/file (1).png" />
+    <style>
+      :root {
+        --primary-color: #34495e;
+        --secondary-color: #3498db;
+        --accent-color: #e74c3c;
+        --light-color: #ecf0f1;
+        --dark-color: #2c3e50;
+        --success-color: #2ecc71;
+        --warning-color: #f39c12;
+        /* Colores exactos de SSMS 2019/2022 */
+        --ssms-bg: #1e1e1e;
+        --ssms-text: #dcdcdc;
+        --ssms-keyword: #569cd6;
+        --ssms-string: #d69e2e;
+        --ssms-comment: #57a64a;
+        --ssms-function: #dcdcaa;
+        --ssms-number: #b5cea8;
+        --ssms-operator: #b4b4b4;
+        --ssms-identifier: #9cdcfe;
+        --ssms-system: #4ec9b0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      header {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      h2 {
+        color: #2c3e50;
+        padding-bottom: 10px;
+        margin-top: 40px;
+        font-size: 1.8em;
+      }
+
+      h3 {
+        color: #2980b9;
+        margin-bottom: 10px;
+        font-size: 1.4em;
+      }
+
+      .job {
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid black;
+      }
+
+      .job-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        align-items: center;
+      }
+
+      .company {
+        font-weight: bold;
+        color: #2c3e50;
+        font-size: 1.3em;
+      }
+
+      .date {
+        color: #7f8c8d;
+        font-style: italic;
+        background: #ecf0f1;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.9em;
+      }
+
+      .position {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .skill {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .skill:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        background: linear-gradient(45deg, #2980b9, #3498db);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo img {
+        height: 80px;
+        margin-right: 15px;
+        border-radius: 10px;
+      }
+
+      .code-container {
+        position: relative;
+        margin: 20px 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .code-header {
+        background: #007acc;
+        color: white;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9em;
+        font-weight: 600;
+      }
+
+      .code-buttons {
+        display: flex;
+        gap: 8px;
+      }
+
+      .copy-btn,
+      .image-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        padding: 5px 12px;
+        font-size: 0.8em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .copy-btn:hover,
+      .image-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .copy-btn.copied {
+        background: var(--success-color);
+        border-color: var(--success-color);
+      }
+
+      .code-block {
+        background-color: var(--ssms-bg);
+        color: var(--ssms-text);
+        padding: 20px;
+        overflow-x: auto;
+        font-family: "Consolas", "Courier New", "Lucida Console", monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: pre;
+        border: none;
+        margin: 0;
+        font-weight: normal;
+      }
+
+      .code-image {
+        display: none;
+        max-width: 100%;
+        height: auto;
+        margin: 15px 0;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .code-image.show {
+        display: block;
+      }
+
+      /* Estilos exactos de SSMS para SQL */
+      .sql-keyword {
+        color: var(--ssms-keyword);
+        font-weight: bold;
+      }
+
+      .sql-function {
+        color: var(--ssms-function);
+        font-weight: normal;
+      }
+
+      .sql-string {
+        color: var(--ssms-string);
+        font-weight: normal;
+      }
+
+      .sql-number {
+        color: var(--ssms-number);
+        font-weight: normal;
+      }
+
+      .sql-comment {
+        color: var(--ssms-comment);
+        font-style: italic;
+        font-weight: normal;
+      }
+
+      .sql-operator {
+        color: var(--ssms-operator);
+        font-weight: normal;
+      }
+
+      .sql-identifier {
+        color: var(--ssms-identifier);
+        font-weight: normal;
+      }
+
+      .sql-system {
+        color: var(--ssms-system);
+        font-weight: normal;
+      }
+
+      /* Secciones de habilidades */
+      .skill-section {
+        background: white;
+        padding: 25px;
+        margin: 25px 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid black;
+        display: none;
+      }
+
+      .skill-section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+        color: white;
+        font-weight: 600;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tr:hover {
+        background-color: #f1f8ff;
+        transition: background-color 0.3s ease;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 50px;
+        padding: 25px;
+        color: #7f8c8d;
+        font-size: 0.9em;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--secondary-color);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 50px;
+        cursor: pointer;
+        display: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+      }
+
+      @media (max-width: 768px) {
+        .job-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .date {
+          margin-top: 8px;
+        }
+
+        .skills {
+          justify-content: center;
+        }
+
+        .code-buttons {
+          flex-direction: column;
+          gap: 5px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="container header-container">
+        <div class="logo">
+          <img src="./img/file (1).png" alt="Logo" />
+          <h1 style="font-family: 'Bell MT', serif">
+            DRAKE.. | Desarrollador Bases de Datos
+          </h1>
+        </div>
+        <p>
+          Administrador de Bases de Datos - Especialista en SQL Server, Oracle y
+          MySQL
+        </p>
+      </div>
+    </header>
+
+    <section id="main-content">
+      <h2>Implementación Base de Datos SQL Server</h2>
+
+      <div class="job">
+        <div class="job-header">
+          <span class="company">Ferreteria TEU</span>
+          <span class="date">Marzo 2023 </span>
+        </div>
+        <div class="position">Desarrollador SQL</div>
+        <ul>
+          <li>
+            Desarrollo de Base de Datos aplicando Normalización 1NF, 2NF, 3NF.
+          </li>
+          <li>
+            Gestión y administración y desarrollo de base de datos SQL Server en
+            entornos de alta disponibilidad (Always On, Clustering)
+          </li>
+          <li>
+            Diseño e implementación de estrategias de backup y recuperación para
+            cumplir con RPO/RTO de 15 minutos
+          </li>
+          <li>
+            Optimización de consultas SQL, reduciendo tiempos de ejecución en un
+            70% en promedio
+          </li>
+          <li>
+            Automatización de procesos ETL usando SSIS, reduciendo tiempos de
+            carga de datos en un 85%
+          </li>
+          <li>
+            Implementación de políticas de seguridad y cumplimiento de GDPR para
+            datos sensibles
+          </li>
+          <li>
+            Desarrollo de procedimientos almacenados y triggers Avanzados.
+          </li>
+        </ul>
+        <div class="skills">
+          <a
+            href="#sql-server-section"
+            class="skill"
+            onclick="showSkillSection('sql-server-section')"
+            >SQL Server</a
+          >
+          <a
+            href="#always-on-section"
+            class="skill"
+            onclick="showSkillSection('always-on-section')"
+            >Always On</a
+          >
+          <a
+            href="#performance-section"
+            class="skill"
+            onclick="showSkillSection('performance-section')"
+            >Performance Tuning</a
+          >
+          <a
+            href="#powershell-section"
+            class="skill"
+            onclick="showSkillSection('powershell-section')"
+            >PowerShell</a
+          >
+          <a
+            href="#ssis-section"
+            class="skill"
+            onclick="showSkillSection('ssis-section')"
+            >SSIS</a
+          >
+          <a
+            href="#gdpr-section"
+            class="skill"
+            onclick="showSkillSection('gdpr-section')"
+            >GDPR</a
+          >
+        </div>
+      </div>
+
+      <div class="code-container">
+        <div class="code-header">
+          <span> Consultas de Información de Base de Datos - SQL Server</span>
+          <div class="code-buttons">
+            <button class="copy-btn" onclick="copyCode(this)"> Copiar</button>
+            <button class="image-btn" onclick="toggleImage(this)">
+               Ver Diagrama
+            </button>
+          </div>
+        </div>
+        <div class="code-block" data-language="SQL">USE FerreteriaDB;
+
+CREATE DATABASE FerreteriaDB;
+ON PRIMARY (
+	NAME = 'Ferreteria_Data',
+	FILENAME = 'C:\SQLServer\Data\FerreteriaDB.mdf',
+	SIZE = 20MB,
+	MAXSIZE = UNLIMITED,
+	FILEGROWTH = 5MB
+)
+LOG ON (
+	NAME = 'Ferreteria_Log',
+	FILENAME = 'C:\SQLSever\Data\FerreteriaDB.ldf',
+	SIZE = 10MB,
+	MAXSIZE = UNLIMITED,
+	FILEGROWTH = 2MB
+);
+USE FerreteriaDB;
+CREATE TABLE Categorias (
+	  CategoriaID VARCHAR(20),
+	  Nombre VARCHAR(50) NOT NULL,
+	  Descripcion VARCHAR(200),
+	  Activa BIT DEFAULT 1,
+	  FechaCreacion DATETIME DEFAULT GETDATE(),
+	  FechaModificacion DATETIME DEFAULT GETDATE(),
+	  CONSTRAINT PK_Categoria PRIMARY KEY(CategoriaID)
+);
+
+CREATE TABLE UnidadesMedida (
+	  UnidadID VARCHAR(20),
+	  Nombre VARCHAR(30) NOT NULL,
+	  Abreviatura VARCHAR(10) NOT NULL,
+	  Activa BIT Default 1,
+	  CONSTRAINT PK_Unidades_Medida PRIMARY KEY(UnidadID)
+);
+
+CREATE TABLE Impuestos (
+  	ImpuestoID VARCHAR(20),
+	  Nombre VARCHAR(30) NOT NULL,	
+	  Porcentaje DECIMAL(5,2) NOT NULL,
+	  FechaInicio DATE NOT NULL,
+	  FechaFin DATE NULL,
+	  Activo BIT DEFAULT 1,
+	  CONSTRAINT PK_Impuestos PRIMARY KEY(ImpuestoID)
+);
+
+CREATE TABLE Marcas (
+	  MarcaID VARCHAR(20),
+	  Nombre VARCHAR(50) NOT NULL,
+	  Descripcion VARCHAR(200),
+	  Activa BIT DEFAULT 1,
+	  CONSTRAINT PK_Marcas PRIMARY KEY(MarcaID)
+);
+
+CREATE TABLE Almacenes (
+	  AlmacenID VARCHAR(20),
+	  Nombre VARCHAR(50) NOT NULL,
+	  Direccion VARCHAR(200) NOT NULL,
+	  Telefono VARCHAR(20),
+	  ResponsableID VARCHAR(20) NULL,
+  	Activo BIT DEFAULT 1,
+	  FechaCreacion DATETIME DEFAULT GETDATE(),
+	  CONSTRAINT PK_Almacenes PRIMARY KEY(AlmacenID)
+);
+
+CREATE TABLE ZonasAlmacen (
+  	ZonaID VARCHAR(20),
+	  AlmacenID VARCHAR(20) NOT NULL,
+	  Nombre VARCHAR(50)  NOT NULL,
+	  Descripcion VARCHAR(200),
+	  CONSTRAINT PK_ZonasAlmacen PRIMARY KEY(ZonaID),
+	  CONSTRAINT FK_Zonas_Almacen_Almacen FOREIGN KEY (AlmacenID) REFERENCES Almacenes(AlmacenID)
+);
+
+CREATE TABLE Productos (
+	  ProductoID VARCHAR(20),
+	  CodigoSKU VARCHAR(20) UNIQUE NOT NULL,
+	  CodigoBarras VARCHAR(30),
+	  Nombre VARCHAR(100) NOT NULL,
+	  Descripcion VARCHAR(50),
+	  CategoriaID VARCHAR(20) NOT NULL,
+	  MarcaID VARCHAR(20),
+	  UnidadMedidaID VARCHAR(20) NOT NULL,
+	  ImpuestoID VARCHAR(20) NOT NULL,
+	  PrecioCompraPromedio DECIMAL(12,2) NOT NULL,
+	  PrecioVentaBase DECIMAL(12,2) NOT NULL,
+	  PuntoReorden INT DEFAULT 5,
+	  StockMinimo INT DEFAULT 1,
+	  StockMaximo INT DEFAULT(1000),
+	  Peso DECIMAL(8,2),
+	  Activo BIT DEFAULT 1,
+	  FechaCreacion DATETIME DEFAULT GETDATE(),
+	  FechaModificacion DATETIME DEFAULT GETDATE(),
+	  Imagen VARCHAR(255),
+	  CONSTRAINT PK_Producto PRIMARY KEY(ProductoID),
+	  CONSTRAINT FK_Productos_Categorias FOREIGN KEY(CategoriaID) REFERENCES Categorias(CategoriaID),
+	  CONSTRAINT FK_Productos_Marcas FOREIGN KEY(MarcaID) REFERENCES Marcas(MarcaID),
+    CONSTRAINT FK_Productos_Impuestos FOREIGN KEY(ImpuestoID) REFERENCES Impuestos(ImpuestoID)
+);
+
+--CONSTRAINT FK_Productos_UnidadesMedida FOREIGN KEY(UnidadMedidaID) REFERENCES UnidadesMedida(UnidadID),
+
+-- Tabla de Inventario (Stock por Almacén)
+CREATE TABLE Inventario (
+    InventarioID VARCHAR(20),
+    ProductoID VARCHAR(20) NOT NULL,
+    AlmacenID VARCHAR(20) NOT NULL,
+    ZonaID VARCHAR(20),
+    Existencia INT NOT NULL DEFAULT 0,
+    ExistenciaMinima INT DEFAULT 0,
+    UbicacionEspecifica VARCHAR(50),
+    UltimoPrecioCompra DECIMAL(12,2),
+    FechaUltimaEntrada DATETIME,
+    FechaUltimaSalida DATETIME,
+    CONSTRAINT PK_Inventario PRIMARY KEY(InventarioID),
+    CONSTRAINT FK_Inventario_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_Inventario_Almacenes FOREIGN KEY (AlmacenID) REFERENCES Almacenes(AlmacenID),
+    CONSTRAINT FK_Inventario_ZonasAlmacen FOREIGN KEY (ZonaID) REFERENCES ZonasAlmacen(ZonaID),
+    CONSTRAINT UK_Inventario_Producto_Almacen UNIQUE (ProductoID, AlmacenID)
+);
+
+
+CREATE TABLE Personas (
+	  PersonaID VARCHAR(20),
+	  TipoDocumentoID VARCHAR(20) NOT NULL,	
+	  NumeroDocumento VARCHAR(10) NOT NULL,
+	  P_Nombre VARCHAR(50) NOT NULL,
+	  S_Nombre VARCHAR(50),
+	  RazonSocial VARCHAR(100),
+	  FechaNacimiento DATE,	
+	  Direccion VARCHAR(200),
+	  Ciudad VARCHAR(50),
+	  Departamento VARCHAR(50),
+	  Pais VARCHAR(50),
+	  Telefono_P VARCHAR(20),
+	  Telefono_S VARCHAR(20),
+	  Email VARCHAR(100),
+	  FechaCreacion DATETIME DEFAULT GETDATE(),
+	  FechaModificacion DATETIME DEFAULT GETDATE(),
+	  Activo BIT DEFAULT 1,
+	  CONSTRAINT PK_Personas PRIMARY KEY(PersonaID),
+	  CONSTRAINT UQ_Personas_Documento UNIQUE(TipoDocumentoID, NumeroDocumento)
+);
+
+--CONSTRAINT FK_Personas_TiposDocumento FOREIGN KEY(TipoDocumentoID) REFERENCES TiposDocumento(TipoDocumentoID),
+
+
+CREATE TABLE Clientes (
+	  ClienteID VARCHAR(20),
+	  PersonaID VARCHAR(20) NOT NULL,
+	  CategoriaCliente VARCHAR(20) DEFAULT 'Regular', --- Regular, VIP, Mayorista.
+	  DiasCredito INT DEFAULT 0,
+	  ClasificacionCrediticia CHAR(1) DEFAULT 'A', -- A, B, C, etc.
+	  Observaciones VARCHAR(500),
+	  CONSTRAINT PK_Clientes PRIMARY KEY(ClienteID),
+	  CONSTRAINT FK_Clientes_Personas FOREIGN KEY(PersonaID) REFERENCES Personas(PersonaID)
+);
+
+
+CREATE TABLE Proveedores (
+	  ProveedorID  VARCHAR(20),
+	  PersonaID VARCHAR(20) NOT NULL,
+	  TipoProveedor VARCHAR(30), ---Material para construccion , Herraminetas
+	  SitioWeb VARCHAR(100),
+	  DiasEntrega INT DEFAULT 1,
+	  DiasCredito INT DEFAULT 0,
+	  Calificacion INT DEFAULT 5 CHECK(Calificacion BETWEEN 1 AND 5),
+	  Observaciones VARCHAR(500),
+	  CONSTRAINT PK_Proveedores PRIMARY KEY(ProveedorID),
+	  CONSTRAINT FK_Proveedores_Personas FOREIGN KEY(PersonaID) REFERENCES Personas(PersonaID)
+);
+
+CREATE TABLE Cargos (
+	  CargoID VARCHAR(20),
+	  Nombre VARCHAR(200) NOT NULL,
+	  Descripcion VARCHAR(200),
+	  Activo BIT DEFAULT 1
+	  CONSTRAINT PK_Cargos PRIMARY KEY(CargoID)
+);
+
+CREATE TABLE Empleados (
+	  EmpleadoID VARCHAR(20),
+	  PersonaID VARCHAR(20) NOT NULL,
+	  CargoID VARCHAR(20) NOT NULL,
+	  FechaContratacion DATE NOT NULL,
+	  FechaTerminacion DATE,
+	  JefeDirectoID INT,
+	  Salario DECIMAL(12,2),
+	  CONSTRAINT PK_Empleados PRIMARY KEY(EmpleadoID),
+	  CONSTRAINT FK_Empleados_Personas FOREIGN KEY(PersonaID) REFERENCES Personas(PersonaID),
+	  CONSTRAINT FK_Empleados_Cargos FOREIGN KEY(CargoID) REFERENCES Cargos(CargoID),
+	  CONSTRAINT FK_Empleados_Jefes FOREIGN KEY(JefeDirectoID) REFERENCES Empleados(EmpleadoID)
+);
+
+
+--- AGREGAMOS LA RELCION PENDIENTE  EN ALMACENES
+
+ALTER TABLE ALMACENES 
+ADD CONSTRAINT FK_Almacenes_Empleados FOREIGN KEY (ResponsableID) REFERENCES Empleados(EmpleadoID);
+
+ALTER TABLE Productos
+ADD CONSTRAINT FK_Productos_UnidadesMedida FOREIGN KEY(UnidadMedidaID) REFERENCES UnidadesMedida(UnidadID);
+
+
+ALTER TABLE Personas 
+ADD CONSTRAINT FK_Personas_TiposDocumento FOREIGN KEY(TipoDocumentoID) REFERENCES TiposDocumento(TipoDocumentoID);
+
+
+-- Insertar datos en tabla TiposDocumento (tabla faltante en el script pero referenciada)
+CREATE TABLE TiposDocumento (
+    TipoDocumentoID VARCHAR(20),
+    Nombre VARCHAR(50) NOT NULL,
+    Abreviatura VARCHAR(10) NOT NULL,
+    Activo BIT DEFAULT 1,
+    CONSTRAINT PK_TiposDocumento PRIMARY KEY(TipoDocumentoID)
+);
+
+
+CREATE TABLE EstadosDocumento (
+	  EstadoID VARCHAR(20),
+	  Nombre VARCHAR(30) NOT NULL,
+	  Descripcion VARCHAR(200),
+	  Activo BIT DEFAULT 1,
+	  CONSTRAINT PK_Estados_Documento PRIMARY KEY(EstadoID)
+);
+
+
+CREATE TABLE OrdenesCompra (
+	  OrdenCompraID VARCHAR(20),
+	  NumeroOrden VARCHAR(20) NOT NULL,
+	  ProveedorID VARCHAR(20) NOT NULL,
+	  FechEmision DATETIME NOT NULL,
+	  FechaEntregaEsperada DATE,
+	  EmpleadoID VARCHAR(20) NOT NULL,
+	  EstadoID VARCHAR(20) NOT NULL,
+	  SubtotalSinImpuesto DECIMAL(12,2) DEFAULT 0,
+	  TotalImpuestos DECIMAL(12,2) DEFAULT 0,
+	  Total DECIMAL(12,2) DEFAULT 0,
+	  Observaciones VARCHAR(200),
+	  FechaCreacion DATETIME DEFAULT GETDATE(),
+	  FechaModificacion DATETIME DEFAULT GETDATE(),
+	  CONSTRAINT PK_OrdenesCompra PRIMARY KEY(OrdenCompraID),
+	  CONSTRAINT FK_OrdenesCompra_Proveedores FOREIGN KEY(EmpleadoID) REFERENCES Empleados(EmpleadoID),
+	  CONSTRAINT FK_OrdenesCompra_Empleados FOREIGN KEY(EmpleadoID) REFERENCES Empleados(EmpleadoID),
+	  CONSTRAINT FK_OrdenesCompra_Estados FOREIGN KEY(EstadoID) REFERENCES EstadosDocumento(EstadoID)
+);
+
+
+CREATE TABLE DetalleCompra (
+	  DetalleOrdenID VARCHAR(20),
+	  OrdenCompraID VARCHAR(20)NOT NULL,
+	  ProductoID VARCHAR(20) NOT NULL,
+	  Cantidad VARCHAR(20) NOT NULL,
+	  PrecioUnitario DECIMAL(12,2) NOT NULL,
+	  PorcentajeDescuento DECIMAL(5,2) DEFAULT 0,
+	  ImpuestoID VARCHAR(20) NOT NULL,
+	  SubtotalImpuesto DECIMAL(12,2) NOT NULL,
+	  TotalImpuesto DECIMAL(12,2) NOT NULL,
+	  TotalLinea DECIMAL(12,2) NOT NULL,
+	  CONSTRAINT PK_DetallesCompra PRIMARY KEY(DetalleOrdenID),
+	  CONSTRAINT FK_DetalleOrden_OrdenesCompra FOREIGN KEY(OrdenCompraID) REFERENCES OrdenesCompra(OrdenCompraID),
+	  CONSTRAINT FK_DetalleOrden_Productos FOREIGN KEY(ProductoID) REFERENCES Productos(ProductoID),
+	  CONSTRAINT FK_DetelleOrden_Impuestos FOREIGN KEY(ImpuestoID) REFERENCES Impuestos(ImpuestoID)
+);
+
+CREATE TABLE EntradasMercancia (
+    EntradaID VARCHAR(20),
+    NumeroEntrada VARCHAR(20) NOT NULL,
+    OrdenCompraID VARCHAR(20), -- Puede ser NULL si es una entrada sin orden previa
+    ProveedorID VARCHAR(20) NOT NULL,
+    NumeroFacturaProveedor VARCHAR(30),
+    FechaRecepcion DATETIME NOT NULL,
+    AlmacenID VARCHAR(20) NOT NULL,
+    EmpleadoRecibeID VARCHAR(20) NOT NULL,
+    EstadoID VARCHAR(20) NOT NULL,
+    SubtotalSinImpuesto DECIMAL(12,2) DEFAULT 0,
+    TotalImpuestos DECIMAL(12,2) DEFAULT 0,
+    Total DECIMAL(12,2) DEFAULT 0,
+    Observaciones VARCHAR(500),
+    FechaCreacion DATETIME DEFAULT GETDATE(),
+	  CONSTRAINT PK_EntradaMercancia PRIMARY KEY(EntradaID),
+    CONSTRAINT FK_EntradasMercancia_OrdenesCompra FOREIGN KEY (OrdenCompraID) REFERENCES OrdenesCompra(OrdenCompraID),
+    CONSTRAINT FK_EntradasMercancia_Proveedores FOREIGN KEY (ProveedorID) REFERENCES Proveedores(ProveedorID),
+    CONSTRAINT FK_EntradasMercancia_Almacenes FOREIGN KEY (AlmacenID) REFERENCES Almacenes(AlmacenID),
+    CONSTRAINT FK_EntradasMercancia_Empleados FOREIGN KEY (EmpleadoRecibeID) REFERENCES Empleados(EmpleadoID),
+    CONSTRAINT FK_EntradasMercancia_Estados FOREIGN KEY (EstadoID) REFERENCES EstadosDocumento(EstadoID)
+);
+
+CREATE TABLE DetalleEntradaMercancia (
+    DetalleEntradaID VARCHAR(20),
+    EntradaID VARCHAR(20) NOT NULL,
+    ProductoID VARCHAR(20) NOT NULL,
+    CantidadRecibida VARCHAR(20) NOT NULL,
+    PrecioUnitario DECIMAL(12,2) NOT NULL,
+    ImpuestoID VARCHAR(20) NOT NULL,
+    SubtotalSinImpuesto DECIMAL(12,2) NOT NULL,
+    TotalImpuesto DECIMAL(12,2) NOT NULL,
+    TotalLinea DECIMAL(12,2) NOT NULL,
+    DetalleOrdenCompraID VARCHAR(20), -- Puede ser NULL
+    ZonaID VARCHAR(20), -- Zona del almacén donde se ubicará
+	  CONSTRAINT PK_DetalleEntradaMercancia PRIMARY KEY(DetalleEntradaID),
+    CONSTRAINT FK_DetalleEntrada_Entradas FOREIGN KEY (EntradaID) REFERENCES EntradasMercancia(EntradaID),
+    CONSTRAINT FK_DetalleEntrada_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_DetalleEntrada_Impuestos FOREIGN KEY (ImpuestoID) REFERENCES Impuestos(ImpuestoID),
+    CONSTRAINT FK_DetalleEntrada_DetalleOrden FOREIGN KEY (DetalleOrdenCompraID) REFERENCES DetalleCompra(DetalleOrdenID),----ERROR AQUÌ
+    CONSTRAINT FK_DetalleEntrada_Zonas FOREIGN KEY (ZonaID) REFERENCES ZonasAlmacen(ZonaID)
+);
+
+
+CREATE TABLE FormasPago (
+	  FormaPagoID VARCHAR(20),
+	  Nombre VARCHAR(50) NOT NULL,
+	  RequiereVerificacion BIT DEFAULT 0,
+	  RequiereAprobacion BIT DEFAULT 0,
+	  PlazosDias INT DEFAULT 0,
+	  Activa BIT DEFAULT 1,
+	  CONSTRAINT PK_FormasPago PRIMARY KEY(FormaPagoID)
+);
+
+CREATE TABLE Ventas (
+    VentaID VARCHAR(20),
+    NumeroFactura VARCHAR(20) NOT NULL,
+    SerieFactura VARCHAR(10) NOT NULL,
+    ClienteID VARCHAR(20) NOT NULL,
+    EmpleadoID VARCHAR(20) NOT NULL, -- Vendedor
+    FechaVenta DATETIME NOT NULL,
+    FormaPagoID VARCHAR(20) NOT NULL,
+    EstadoID VARCHAR(20) NOT NULL,
+    AlmacenID VARCHAR(20) NOT NULL,
+    SubtotalSinImpuesto DECIMAL(12,2) DEFAULT 0,
+    DescuentoTotal DECIMAL(12,2) DEFAULT 0,
+    TotalImpuestos DECIMAL(12,2) DEFAULT 0,
+    Total DECIMAL(12,2) DEFAULT 0,
+    Observaciones VARCHAR(500),
+    FechaCreacion DATETIME DEFAULT GETDATE(),
+	  CONSTRAINT PK_Ventas PRIMARY KEY(VentaID),
+    CONSTRAINT FK_Ventas_Clientes FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID),
+    CONSTRAINT FK_Ventas_Empleados FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID),
+    CONSTRAINT FK_Ventas_FormasPago FOREIGN KEY (FormaPagoID) REFERENCES FormasPago(FormaPagoID),
+    CONSTRAINT FK_Ventas_Estados FOREIGN KEY (EstadoID) REFERENCES EstadosDocumento(EstadoID),
+    CONSTRAINT FK_Ventas_Almacenes FOREIGN KEY (AlmacenID) REFERENCES Almacenes(AlmacenID),
+    CONSTRAINT UQ_Ventas_NumeroSerie UNIQUE (NumeroFactura, SerieFactura)
+);
+
+CREATE TABLE DetalleVenta (
+    DetalleVentaID VARCHAR(20),
+    VentaID VARCHAR(20) NOT NULL,
+    ProductoID VARCHAR(20) NOT NULL,
+    Cantidad VARCHAR(20) NOT NULL,
+    PrecioUnitario DECIMAL(12,2) NOT NULL,
+    PorcentajeDescuento DECIMAL(5,2) DEFAULT 0,
+    ImpuestoID VARCHAR(20) NOT NULL,
+    SubtotalSinImpuesto DECIMAL(12,2) NOT NULL,
+    TotalDescuento DECIMAL(12,2) NOT NULL,
+    TotalImpuesto DECIMAL(12,2) NOT NULL,
+    TotalLinea DECIMAL(12,2) NOT NULL,
+	  CONSTRAINT PK_DetelleVenta PRIMARY KEY(DetalleVentaID),
+    CONSTRAINT FK_DetalleVenta_Ventas FOREIGN KEY (VentaID) REFERENCES Ventas(VentaID),
+    CONSTRAINT FK_DetalleVenta_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_DetalleVenta_Impuestos FOREIGN KEY (ImpuestoID) REFERENCES Impuestos(ImpuestoID)
+);
+
+
+CREATE TABLE PagosVenta (
+	  PagoID VARCHAR(20),
+	  VentaID VARCHAR(20) NOT NULL,
+	  FormaPagoID VARCHAR(20) NOT NULL,
+	  Monto DECIMAL(12,2) NOT NULL,	
+	  FechaPago DATETIME NOT NULL,
+	  NumeroReferencia VARCHAR(50), -- Para cheques o transferencias
+	  EmpleadoRegistraID VARCHAR(20) NOT NULL,
+	  Observaciones VARCHAR(200),
+	  CONSTRAINT PK_PagoVenta PRIMARY KEY(PagoID),
+	  CONSTRAINT FK_PagosVenta_Ventas FOREIGN KEY(VentaID) REFERENCES Ventas(VentaID),
+	  CONSTRAINT FK_PagosVenta_FormasPago FOREIGN KEY(FormaPagoID) REFERENCES FormasPago(FormaPagoID),
+	  CONSTRAINT FK_PagosVenta_Empleados FOREIGN KEY(EmpleadoRegistraID) REFERENCES Empleados(EmpleadoID)
+);
+
+
+
+CREATE TABLE Remisiones (
+	  RemisionID VARCHAR(20),
+	  NumeroRemision VARCHAR(20) NOT NULL,
+	  VentaID VARCHAR(20) NOT NULL,
+	  FechaRemision DATETIME NOT NULL,
+	  EmpleadoEntregaID VARCHAR(20) NOT NULL,
+	  DireccionEntrega VARCHAR(200),
+	  EstadoID VARCHAR(20) NOT NULL,
+	  Observaciones VARCHAR(500),
+	  CONSTRAINT PK_Remisones PRIMARY KEY(RemisionID),
+	  CONSTRAINT FK_Remisones_Ventas FOREIGN KEY(VentaID) REFERENCES Ventas(VentaID),
+	  CONSTRAINT FK_Remisiones_Empleados FOREIGN KEY (EmpleadoEntregaID) REFERENCES Empleados(EmpleadoID),
+	  CONSTRAINT FK_Remisiones_Estados FOREIGN KEY(EstadoID) REFERENCES EstadosDocumento(EstadoID)
+);
+
+CREATE TABLE DetalleRemision (
+	  DetalleRemisionID VARCHAR(20),
+	  RemisionID VARCHAR(20) NOT NULL,
+	  DetalleVentaID VARCHAR(20) NOT NULL,
+	  CantidadEntregada INT NOT NULL,
+	  CONSTRAINT PK_DetalleRemision PRIMARY KEY(DetalleRemisionID),
+	  CONSTRAINT FK_DetalleRemision_Remisiones FOREIGN KEY(RemisionID) REFERENCES Remisiones(RemisionID),
+	  CONSTRAINT FK_DetalleRemision_DetalleVenta FOREIGN KEY(DetalleVentaID) REFERENCES DetalleVenta(DetalleVentaID)
+);
+
+CREATE TABLE TiposMovimientoInventario (
+	  TipoMovimientoID VARCHAR(20),
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(200),
+    AfectaStock INT NOT NULL, -- 1: Aumenta, -1: Disminuye, 0: No afecta
+    RequiereAprobacion BIT DEFAULT 0,
+	  Activo BIT DEFAULT 1,
+	  CONSTRAINT PK_TiposMovimientoInventario PRIMARY KEY(TipoMovimientoID)
+);
+
+CREATE TABLE MovimientosInventario (
+	  MovimientoID VARCHAR(20),
+	  FechaMovimiento DATETIME NOT NULL,
+	  TipoMovimientoID INT NOT NULL,
+	  ProductoID VARCHAR(20) NOT NULL,
+    AlmacenOrigenID VARCHAR(20),
+    AlmacenDestinoID VARCHAR(20),
+    Cantidad VARCHAR(20) NOT NULL,
+    DocumentoReferenciaID VARCHAR(20), -- ID de Venta, Entrada, Devolución, etc.
+    TipoDocumentoReferencia VARCHAR(30), -- "Venta", "Entrada", "Ajuste", etc.
+    EmpleadoID VARCHAR(20) NOT NULL,
+    Observaciones VARCHAR(200),
+    FechaRegistro DATETIME DEFAULT GETDATE(),
+	  CONSTRAINT PK_MovimientoInventario PRIMARY KEY(MovimientoID),
+    CONSTRAINT FK_MovimientosInventario_TiposMovimiento FOREIGN KEY (TipoMovimientoID) REFERENCES TiposMovimientoInventario(TipoMovimientoID),
+    CONSTRAINT FK_MovimientosInventario_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_MovimientosInventario_AlmacenOrigen FOREIGN KEY (AlmacenOrigenID) REFERENCES Almacenes(AlmacenID),
+    CONSTRAINT FK_MovimientosInventario_AlmacenDestino FOREIGN KEY (AlmacenDestinoID) REFERENCES Almacenes(AlmacenID),
+    CONSTRAINT FK_MovimientosInventario_Empleados FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID)
+);
+
+
+CREATE TABLE AjustesInventario (
+	  AjusteID VARCHAR(20),
+	  NumeroAjuste VARCHAR(20) NOT NULL,
+	  FechaAjuste DATETIME NOT NULL,
+	  EmpleadoRegistraID VARCHAR(20) NOT NULL,
+	  EmpleadoApruebaID VARCHAR(20),
+	  FechaAprobacion DATETIME,
+	  EstadoID VARCHAR(20) NOT NULL,
+	  Motivo VARCHAR(200) NOT NULL,
+	  Observaciones VARCHAR(500),
+	  CONSTRAINT PK_AjusteInventario PRIMARY KEY(AjusteID),
+	  CONSTRAINT FK_AjustesInventario_EmpleadoRegistra FOREIGN KEY (EmpleadoRegistraID) REFERENCES Empleados(EmpleadoID),
+	  CONSTRAINT FK_AjustesInventario_EmpleadoAprueba FOREIGN KEY (EmpleadoApruebaID) REFERENCES Empleados(EmpleadoID),
+	  CONSTRAINT FK_AjustesInventario_Estados FOREIGN KEY (EstadoID) REFERENCES EstadosDocumento(EstadoID)
+);
+
+
+CREATE TABLE DetalleAjusteInventario (
+	  DetalleAjusteID VARCHAR(20),
+    AjusteID VARCHAR(20) NOT NULL,
+    ProductoID VARCHAR(20) NOT NULL,
+    AlmacenID VARCHAR(20) NOT NULL,
+	  CantidadAnterior INT NOT NULL,
+    CantidadNueva INT NOT NULL,
+    TipoAjuste CHAR(1) NOT NULL, -- 'A': Aumento, 'D': Disminución
+    MovimientoInventarioID VARCHAR(20), -- Para relacionar con el movimiento generado
+	  CONSTRAINT PK_DetalleAjusteInventario PRIMARY KEY(DetalleAjusteID),
+    CONSTRAINT FK_DetalleAjuste_Ajustes FOREIGN KEY (AjusteID) REFERENCES AjustesInventario(AjusteID),
+    CONSTRAINT FK_DetalleAjuste_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_DetalleAjuste_Almacenes FOREIGN KEY (AlmacenID) REFERENCES Almacenes(AlmacenID),
+    CONSTRAINT FK_DetalleAjuste_Movimientos FOREIGN KEY (MovimientoInventarioID) REFERENCES MovimientosInventario(MovimientoID)
+);
+
+
+
+CREATE TABLE DevolucionesClientes (
+	  DevolucionID VARCHAR(20),
+    NumeroDevolucion VARCHAR(20) NOT NULL,
+    VentaID VARCHAR(20) NOT NULL,
+    ClienteID VARCHAR(20) NOT NULL,
+    FechaDevolucion DATETIME NOT NULL,
+    MotivoDevolucion VARCHAR(200) NOT NULL,
+    EmpleadoRegistraID VARCHAR(20) NOT NULL,
+    EstadoID VARCHAR(20) NOT NULL,
+    Total DECIMAL(12,2) DEFAULT 0,
+    Observaciones VARCHAR(500),
+	  CONSTRAINT PK_DevolucionesClientes PRIMARY KEY(DevolucionID),
+    CONSTRAINT FK_Devoluciones_Ventas FOREIGN KEY (VentaID) REFERENCES Ventas(VentaID),
+    CONSTRAINT FK_Devoluciones_Clientes FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID),
+    CONSTRAINT FK_Devoluciones_Empleados FOREIGN KEY (EmpleadoRegistraID) REFERENCES Empleados(EmpleadoID),
+    CONSTRAINT FK_Devoluciones_Estados FOREIGN KEY (EstadoID) REFERENCES EstadosDocumento(EstadoID)
+);
+
+
+
+CREATE TABLE DetalleDevolucionCliente (
+	  DetalleDevolucionID VARCHAR(20),
+    DevolucionID VARCHAR(20) NOT NULL,
+    DetalleVentaID VARCHAR(20) NOT NULL,
+    ProductoID VARCHAR(20) NOT NULL,
+    CantidadDevuelta INT NOT NULL,
+    PrecioUnitario DECIMAL(12,2) NOT NULL,
+    SubtotalSinImpuesto DECIMAL(12,2) NOT NULL,
+    TotalImpuesto DECIMAL(12,2) NOT NULL,
+    TotalLinea DECIMAL(12,2) NOT NULL,
+    MovimientoInventarioID VARCHAR(20), -- Para relacionar con el movimiento generado
+	  CONSTRAINT PK_DetalleDevolucionCliente PRIMARY KEY(DetalleDevolucionID),
+    CONSTRAINT FK_DetalleDevolucion_Devoluciones FOREIGN KEY (DevolucionID) REFERENCES DevolucionesClientes(DevolucionID),
+    CONSTRAINT FK_DetalleDevolucion_DetalleVenta FOREIGN KEY (DetalleVentaID) REFERENCES DetalleVenta(DetalleVentaID),
+    CONSTRAINT FK_DetalleDevolucion_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_DetalleDevolucion_Movimientos FOREIGN KEY (MovimientoInventarioID) REFERENCES MovimientosInventario(MovimientoID)
+);
+
+CREATE TABLE NotasCredito (
+	  NotaCreditoID VARCHAR(20),
+    NumeroNota VARCHAR(20) NOT NULL,
+    DevolucionID VARCHAR(20),
+    VentaID VARCHAR(20) NOT NULL,
+    ClienteID VARCHAR(20) NOT NULL,
+    FechaEmision DATETIME NOT NULL,
+    EmpleadoRegistraID VARCHAR(20) NOT NULL,
+    Monto DECIMAL(12,2) NOT NULL,
+    Observaciones VARCHAR(500),
+	  CONSTRAINT PK_NotasCredito PRIMARY KEY(NotaCreditoID),
+    CONSTRAINT FK_NotasCredito_Devoluciones FOREIGN KEY (DevolucionID) REFERENCES DevolucionesClientes(DevolucionID),
+    CONSTRAINT FK_NotasCredito_Ventas FOREIGN KEY (VentaID) REFERENCES Ventas(VentaID),
+    CONSTRAINT FK_NotasCredito_Clientes FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID),
+    CONSTRAINT FK_NotasCredito_Empleados FOREIGN KEY (EmpleadoRegistraID) REFERENCES Empleados(EmpleadoID)
+);
+
+CREATE TABLE Cotizaciones (
+	  CotizacionID VARCHAR(20),
+    NumeroCotizacion VARCHAR(20) NOT NULL,
+    ClienteID VARCHAR(20) NOT NULL,
+    EmpleadoID VARCHAR(20) NOT NULL,
+    FechaCotizacion DATETIME NOT NULL,
+    ValidaHasta DATE NOT NULL,
+    EstadoID VARCHAR(20) NOT NULL,
+    SubtotalSinImpuesto DECIMAL(12,2) DEFAULT 0,
+    TotalImpuestos DECIMAL(12,2) DEFAULT 0,
+    Total DECIMAL(12,2) DEFAULT 0,
+    VentaGeneradaID VARCHAR(20), -- Si se convirtió en venta
+    Observaciones VARCHAR(500),
+	  CONSTRAINT PK_Cotizaciones PRIMARY KEY(CotizacionID),
+    CONSTRAINT FK_Cotizaciones_Clientes FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID),
+    CONSTRAINT FK_Cotizaciones_Empleados FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID),
+    CONSTRAINT FK_Cotizaciones_Estados FOREIGN KEY (EstadoID) REFERENCES EstadosDocumento(EstadoID),
+    CONSTRAINT FK_Cotizaciones_Ventas FOREIGN KEY (VentaGeneradaID) REFERENCES Ventas(VentaID)
+);
+
+CREATE TABLE DetalleCotizacion (
+	  DetalleCotizacionID VARCHAR(20),
+    CotizacionID VARCHAR(20) NOT NULL,
+    ProductoID VARCHAR(20) NOT NULL,
+    Cantidad INT NOT NULL,
+    PrecioUnitario DECIMAL(12,2) NOT NULL,
+    PorcentajeDescuento DECIMAL(5,2) DEFAULT 0,
+    ImpuestoID VARCHAR(20) NOT NULL,
+    SubtotalSinImpuesto DECIMAL(12,2) NOT NULL,
+    TotalDescuento DECIMAL(12,2) NOT NULL,
+    TotalImpuesto DECIMAL(12,2) NOT NULL,
+    TotalLinea DECIMAL(12,2) NOT NULL,
+	  CONSTRAINT PK_DetalleCotizacion PRIMARY KEY(DetalleCotizacionID),
+    CONSTRAINT FK_DetalleCotizacion_Cotizaciones FOREIGN KEY (CotizacionID) REFERENCES Cotizaciones(CotizacionID),
+    CONSTRAINT FK_DetalleCotizacion_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_DetalleCotizacion_Impuestos FOREIGN KEY (ImpuestoID) REFERENCES Impuestos(ImpuestoID)
+);
+
+CREATE TABLE HistorialPreciosProductos (
+	  HistorialPrecioID VARCHAR(20),
+    ProductoID VARCHAR(20) NOT NULL,
+    PrecioAnterior DECIMAL(12,2) NOT NULL,
+    PrecioNuevo DECIMAL(12,2) NOT NULL,
+    FechaCambio DATETIME NOT NULL,
+    EmpleadoID VARCHAR(20) NOT NULL,
+    Motivo VARCHAR(200),
+	  CONSTRAINT PK_HistorialPreciosProductos PRIMARY KEY(HistorialPrecioID),
+    CONSTRAINT FK_HistorialPrecios_Productos FOREIGN KEY (ProductoID) REFERENCES Productos(ProductoID),
+    CONSTRAINT FK_HistorialPrecios_Empleados FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID)
+);
+
+CREATE TABLE LogAccionesUsuario (
+	  LogID VARCHAR(20),
+    EmpleadoID VARCHAR(20) NOT NULL,
+    FechaHora DATETIME NOT NULL DEFAULT GETDATE(),
+    Accion VARCHAR(100) NOT NULL,
+    TablaAfectada VARCHAR(50),
+    RegistroID INT,
+    Detalles VARCHAR(MAX),
+    DireccionIP VARCHAR(50),
+	  CONSTRAINT PK_LogAccionesUsuario PRIMARY KEY(LogID),
+    CONSTRAINT FK_LogAcciones_Empleados FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID)
+);
+
+CREATE TABLE PeriodosReporte (
+	  PeriodoID VARCHAR(20),
+    Nombre VARCHAR(50) NOT NULL,
+    FechaInicio DATE NOT NULL,
+    FechaFin DATE NOT NULL,
+    Tipo VARCHAR(20) NOT NULL, -- Mensual, trimestral, anual, etc.
+    Cerrado BIT DEFAULT 0,
+    FechaCierre DATETIME,
+	  CONSTRAINT PK_PeriodosReporte PRIMARY KEY(PeriodoID)
+);
+
+CREATE TABLE MetasVenta (
+	  MetaID VARCHAR(20),
+    PeriodoID VARCHAR(20) NOT NULL,
+    EmpleadoID VARCHAR(20), -- NULL para metas generales
+    CategoriaID VARCHAR(20), -- NULL para todas las categorías
+    MontoMeta DECIMAL(12,2) NOT NULL,
+    Descripcion VARCHAR(200),
+	  CONSTRAINT PK_MetasVenta PRIMARY KEY(MetaID),
+    CONSTRAINT FK_MetasVenta_Periodos FOREIGN KEY (PeriodoID) REFERENCES PeriodosReporte(PeriodoID),
+    CONSTRAINT FK_MetasVenta_Empleados FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID),
+    CONSTRAINT FK_MetasVenta_Categorias FOREIGN KEY (CategoriaID) REFERENCES Categorias(CategoriaID)
+);
+
+CREATE TABLE ConfiguracionSistema (
+    ConfigID VARCHAR(20),
+    Clave VARCHAR(50) NOT NULL UNIQUE,
+    Valor VARCHAR(MAX) NOT NULL,
+    Descripcion VARCHAR(200),
+    TipoDato VARCHAR(20) NOT NULL, -- String, Integer, Decimal, Boolean, etc.
+    ModificablePorUsuario BIT DEFAULT 1,
+    FechaModificacion DATETIME DEFAULT GETDATE(),
+    EmpleadoModificaID VARCHAR(20),
+	  CONSTRAINT PK_ConfiguracionSistema PRIMARY KEY(ConfigID),
+    CONSTRAINT FK_ConfiguracionSistema_Empleados FOREIGN KEY (EmpleadoModificaID) REFERENCES Empleados(EmpleadoID)
+);
+
+CREATE TABLE SecuenciasDocumentos (
+	  SecuenciaID VARCHAR(20),
+    TipoDocumento VARCHAR(30) NOT NULL, -- Factura, Orden de Compra, Remisión, etc.
+    Serie VARCHAR(10) NOT NULL,
+    UltimoNumero INT NOT NULL DEFAULT 0,
+    FormatoNumero VARCHAR(20), -- Formato de presentación
+    Activa BIT DEFAULT 1,
+	  CONSTRAINT PK_SecuenciasDocumentos PRIMARY KEY(SecuenciaID),
+    CONSTRAINT UK_SecuenciasDocumentos UNIQUE (TipoDocumento, Serie)
+);
+</div>
+        <img
+          src="./img/E-R-FerreteriaDBA.jpg"
+          alt="Diagrama de Bases de Datos"
+          class="code-image"
+        />
+      </div>
+
+      <!-- Secciones de Habilidades -->
+      <div id="sql-server-section" class="skill-section">
+        <h3> SQL Server - Administración Avanzada</h3>
+        <p>
+          Experiencia completa en administración de SQL Server desde versiones
+          2012 hasta 2022, incluyendo configuración de instancias, mantenimiento
+          de bases de datos y optimización de rendimiento.
+        </p>
+
+        <h4>Configuraciones Principales:</h4>
+        <div class="code-container">
+          <div class="code-header">
+            <span>Configuración de Instancia SQL Server</span>
+            <div class="code-buttons">
+              <button class="copy-btn" onclick="copyCode(this)">
+                 Copiar
+              </button>
+            </div>
+          </div>
+          <div class="code-block" data-language="SQL">-- Verificar configuración de instancia
+SELECT name, 
+       value,
+       value_in_use, 
+       description 
+FROM sys.configurations 
+WHERE name IN ('max server memory (MB)', 
+               'min server memory (MB)', 
+               'cost threshold for parallelism', 
+               'max degree of parallelism') 
+ORDER BY name;
+
+-- Configurar memoria del servidor
+EXEC sp_configure 'max server memory (MB)', 8192;
+RECONFIGURE WITH OVERRIDE;</div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Versión</th>
+              <th>Características Clave</th>
+              <th>Experiencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SQL Server 2022</td>
+              <td>Azure Arc, Intelligent Query Processing</td>
+              <td>2 años</td>
+            </tr>
+            <tr>
+              <td>SQL Server 2019</td>
+              <td>Big Data Clusters, Polybase</td>
+              <td>3 años</td>
+            </tr>
+            <tr>
+              <td>SQL Server 2017</td>
+              <td>Linux Support, Graph Database</td>
+              <td>4 años</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="always-on-section" class="skill-section">
+        <h3> Always On Availability Groups</h3>
+        <p>
+          Implementación y gestión de soluciones de alta disponibilidad usando
+          Always On Availability Groups para garantizar continuidad del negocio.
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Configuración Always On</span>
+            <div class="code-buttons">
+              <button class="copy-btn" onclick="copyCode(this)">
+                 Copiar
+              </button>
+            </div>
+          </div>
+          <div class="code-block" data-language="SQL">-- Verificar estado de Always On
+SELECT ag.name AS AvailabilityGroup, 
+       ar.replica_server_name AS ReplicaServer,
+       ar.availability_mode_desc AS AvailabilityMode, 
+       ar.failover_mode_desc AS FailoverMode, 
+       ars.role_desc AS CurrentRole,
+       ars.connected_state_desc AS ConnectionState 
+FROM sys.availability_groups ag 
+JOIN sys.availability_replicas ar ON ag.group_id = ar.group_id 
+JOIN sys.dm_hadr_availability_replica_states ars ON ar.replica_id = ars.replica_id 
+ORDER BY ag.name, ar.replica_server_name;</div>
+        </div>
+      </div>
+
+      <div id="performance-section" class="skill-section">
+        <h3> Performance Tuning</h3>
+        <p>
+          Optimización de consultas SQL y ajuste de rendimiento de bases de
+          datos para maximizar la eficiencia del sistema.
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Análisis de Performance</span>
+            <div class="code-buttons">
+              <button class="copy-btn" onclick="copyCode(this)">
+                 Copiar
+              </button>
+            </div>
+          </div>
+          <div class="code-block" data-language="SQL">-- Top 10 consultas más costosas
+SELECT TOP 10 
+       qs.total_elapsed_time / qs.execution_count AS avg_elapsed_time, 
+       qs.total_logical_reads / qs.execution_count AS avg_logical_reads, 
+       qs.execution_count,
+       SUBSTRING(qt.text, 
+                 qs.statement_start_offset/2 + 1, 
+                 (CASE WHEN qs.statement_end_offset = -1 
+                       THEN LEN(CONVERT(nvarchar(max), qt.text)) * 2 
+                       ELSE qs.statement_end_offset 
+                  END - qs.statement_start_offset)/2) AS query_text 
+FROM sys.dm_exec_query_stats qs 
+CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) AS qt 
+ORDER BY avg_elapsed_time DESC;</div>
+        </div>
+      </div>
+
+      <div id="powershell-section" class="skill-section">
+        <h3> PowerShell para SQL Server</h3>
+        <p>
+          Automatización de tareas administrativas y gestión de SQL Server
+          mediante PowerShell y módulos SQLPS.
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Scripts PowerShell</span>
+            <div class="code-buttons">
+              <button class="copy-btn" onclick="copyCode(this)">
+                 Copiar
+              </button>
+            </div>
+          </div>
+          <div class="code-block" data-language="PowerShell"># Backup automatizado de todas las bases de datos
+Import-Module SQLPS -DisableNameChecking
+
+$ServerInstance = "localhost"
+$BackupPath = "C:\Backups\"
+
+$databases = Invoke-Sqlcmd -ServerInstance $ServerInstance -Query `
+    "SELECT name FROM sys.databases WHERE database_id > 4"
+
+foreach($db in $databases) {
+    $BackupFile = $BackupPath + $db.name + "_" + 
+                  (Get-Date -Format "yyyyMMdd_HHmmss") + ".bak"
+    
+    Backup-SqlDatabase -ServerInstance $ServerInstance `
+                       -Database $db.name `
+                       -BackupFile $BackupFile
+    
+    Write-Host "Backup completed for database: $($db.name)"
+}</div>
+        </div>
+      </div>
+
+      <div id="ssis-section" class="skill-section">
+        <h3> SSIS (SQL Server Integration Services)</h3>
+        <p>
+          Desarrollo e implementación de procesos ETL robustos para integración
+          y transformación de datos empresariales.
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Monitoreo SSIS</span>
+            <div class="code-buttons">
+              <button class="copy-btn" onclick="copyCode(this)">
+                 Copiar
+              </button>
+            </div>
+          </div>
+          <div class="code-block" data-language="SQL">-- Monitorear ejecuciones de paquetes SSIS
+SELECT execution_id, 
+       folder_name, 
+       project_name, 
+       package_name, 
+       reference_id,
+       parameter_name, 
+       parameter_value, 
+       start_time, 
+       end_time, 
+       status 
+FROM [SSISDB].[catalog].[executions] 
+WHERE start_time >= DATEADD(day, -7, GETDATE()) 
+ORDER BY start_time DESC;</div>
+        </div>
+      </div>
+
+      <div id="gdpr-section" class="skill-section">
+        <h3> GDPR Compliance</h3>
+        <p>
+          Implementación de políticas de seguridad y cumplimiento de GDPR para
+          protección de datos personales y sensibles.
+        </p>
+
+        <div class="code-container">
+          <div class="code-header">
+            <span>Auditoría GDPR</span>
+            <div class="code-buttons">
+              <button class="copy-btn" onclick="copyCode(this)">
+                 Copiar
+              </button>
+            </div>
+          </div>
+          <div class="code-block" data-language="SQL">-- Auditoría de acceso a datos sensibles
+SELECT server_principal_name, 
+       database_principal_name, 
+       object_name,
+       statement, 
+       succeeded, 
+       event_time 
+FROM sys.fn_get_audit_file('C:\Audit\*.sqlaudit', default, default) 
+WHERE object_name LIKE '%PersonalData%' 
+  AND event_time >= DATEADD(day, -30, GETDATE()) 
+ORDER BY event_time DESC;</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="back-to-top" onclick="scrollToTop()">↑ Arriba</div>
+
+    <footer>
+      <p> Experiencia Laboral DBA </p>
+      <p>SQL Server</p>
+    </footer>
+
+    <script>
+      function copyCode(btn) {
+          const codeBlock = btn.closest('.code-container').querySelector('.code-block');
+          const tempElement = document.createElement('textarea');
+          tempElement.value = codeBlock.textContent;
+          document.body.appendChild(tempElement);
+
+          tempElement.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempElement);
+
+          // Animación de confirmación
+          const originalText = btn.innerHTML;
+          btn.innerHTML = ' ¡Copiado!';
+          btn.classList.add('copied');
+
+          setTimeout(() => {
+              btn.innerHTML = originalText;
+              btn.classList.remove('copied');
+          }, 2000);
+      }
+
+      function toggleImage(btn) {
+          const imgElement = btn.closest('.code-container').querySelector('.code-image');
+
+          if (imgElement.classList.contains('show')) {
+              imgElement.classList.remove('show');
+              btn.innerHTML = ' Ver Diagrama';
+          } else {
+              imgElement.classList.add('show');
+              btn.innerHTML = '🙈 Ocultar Diagrama';
+          }
+      }
+
+      function showSkillSection(sectionId) {
+          // Ocultar todas las secciones de habilidades
+          const skillSections = document.querySelectorAll('.skill-section');
+          skillSections.forEach(section => {
+              section.classList.remove('active');
+          });
+
+          // Mostrar la sección seleccionada
+          const targetSection = document.getElementById(sectionId);
+          if (targetSection) {
+              targetSection.classList.add('active');
+
+              // Scroll suave hacia la sección
+              setTimeout(() => {
+                  targetSection.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'start'
+                  });
+              }, 100);
+          }
+      }
+
+      function applySqlSyntaxHighlighting() {
+          const codeBlocks = document.querySelectorAll('.code-block[data-language="SQL"]');
+          
+          codeBlocks.forEach(block => {
+              let content = block.innerHTML;
+              
+              // Palabras clave SQL principales
+              const keywords = [
+                  'SELECT', 'FROM', 'WHERE', 'JOIN', 'INNER', 'LEFT', 'RIGHT', 'OUTER', 'CROSS',
+                  'AND', 'OR', 'NOT', 'IN', 'EXISTS', 'BETWEEN', 'LIKE', 'IS', 'NULL',
+                  'ORDER BY', 'ORDER', 'BY', 'GROUP BY', 'GROUP', 'HAVING', 'DISTINCT', 'TOP',
+                  'INSERT', 'INTO', 'UPDATE', 'DELETE', 'CREATE', 'ALTER', 'DROP', 'TRUNCATE',
+                  'EXEC', 'EXECUTE', 'PROCEDURE', 'FUNCTION', 'TRIGGER', 'VIEW', 'INDEX', 'TABLE',
+                  'PRIMARY KEY', 'PRIMARY', 'KEY', 'FOREIGN KEY', 'FOREIGN', 'CONSTRAINT',
+                  'DECLARE', 'SET', 'BEGIN', 'END', 'IF', 'ELSE', 'WHILE', 'FOR', 'RETURN',
+                  'VALUES', 'AS', 'ON', 'WHEN', 'THEN', 'CASE', 'WITH', 'UNION', 'ALL',
+                  'USE', 'DATABASE', 'SCHEMA', 'VARCHAR', 'INT', 'DECIMAL', 'DATETIME', 'DATE',
+                  'BIT', 'DEFAULT', 'IDENTITY', 'RECONFIGURE', 'OVERRIDE'
+              ];
+              
+              // Funciones del sistema
+              const functions = [
+                  'GETDATE', 'COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'CAST', 'CONVERT', 'LEN', 
+                  'SUBSTRING', 'DATEADD', 'DATEDIFF', 'ISNULL', 'COALESCE'
+              ];
+              
+              // Objetos del sistema
+              const systemObjects = [
+                  'sys.configurations', 'sys.availability_groups', 'sys.availability_replicas',
+                  'sys.dm_hadr_availability_replica_states', 'sys.dm_exec_query_stats',
+                  'sys.dm_exec_sql_text', 'sys.fn_get_audit_file'
+              ];
+              
+              // Procedimientos del sistema
+              const systemProcs = ['sp_configure'];
+
+              // Aplicar resaltado de sintaxis
+              keywords.forEach(keyword => {
+                  const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+                  content = content.replace(regex, `<span class="sql-keyword">${keyword}</span>`);
+              });
+              
+              functions.forEach(func => {
+                  const regex = new RegExp(`\\b${func}\\b`, 'gi');
+                  content = content.replace(regex, `<span class="sql-function">${func}</span>`);
+              });
+              
+              systemObjects.forEach(obj => {
+                  const regex = new RegExp(`\\b${obj.replace('.', '\\.')}\\b`, 'gi');
+                  content = content.replace(regex, `<span class="sql-system">${obj}</span>`);
+              });
+              
+              systemProcs.forEach(proc => {
+                  const regex = new RegExp(`\\b${proc}\\b`, 'gi');
+                  content = content.replace(regex, `<span class="sql-system">${proc}</span>`);
+              });
+              
+              // Resaltar strings (contenido entre comillas simples)
+              content = content.replace(/'([^']*)'/g, `<span class="sql-string">'$1'</span>`);
+              
+              // Resaltar números
+              content = content.replace(/\b\d+(\.\d+)?\b/g, `<span class="sql-number">$&</span>`);
+              
+              // Resaltar comentarios
+              content = content.replace(/--.*$/gm, `<span class="sql-comment">$&</span>`);
+              
+              block.innerHTML = content;
+          });
+      }
+
+      function scrollToTop() {
+          window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+          });
+      }
+
+      // Mostrar/ocultar botón "Volver arriba"
+      window.addEventListener('scroll', function() {
+          const backToTopBtn = document.querySelector('.back-to-top');
+          if (window.pageYOffset > 300) {
+              backToTopBtn.style.display = 'block';
+          } else {
+              backToTopBtn.style.display = 'none';
+          }
+      });
+
+      // Aplicar resaltado de sintaxis cuando la página cargue
+      document.addEventListener('DOMContentLoaded', function() {
+          applySqlSyntaxHighlighting();
+      });
+    </script>
+  </body>
+</html>

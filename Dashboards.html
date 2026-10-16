@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Projects Showcase</title>
+    <link rel="website icon" type="png"   href="./img/file (1).png">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: rgba(212, 221, 213, 0.9);
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: blue;
+        font-size: 2.2rem;
+      }
+
+      .projects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .project-card {
+        background-color: rgb(248, 16, 16); /* Fondo blanco semitransparente */
+        backdrop-filter: blur(10px); /* Efecto de desenfoque */
+        border-radius: 10px; /* Bordes redondeados opcional */
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid black; /* Added black border */
+        padding: 20px; /* Espaciado interno */
+      }
+
+      .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .project-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .project-content {
+        padding: 1.5rem;
+      }
+
+      .project-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #030609;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-description {
+        color: #e2e8e2;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        height: 4.5rem;
+        overflow: hidden;
+      }
+
+      .project-button {
+        display: inline-block;
+        background-color: #1a365d;
+        color: white;
+        padding: 0.65rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
+      }
+
+      .project-button:hover {
+        background-color: #2a4365;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .tag {
+        background-color: #e2e8f0;
+        color: black;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+      }
+
+      button {
+        background-color: red; /* Color del botón */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin: 0 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+      }
+      
+      button:hover {
+        background-color: #005f99; /* Color al pasar el cursor */
+      }
+
+      /*Header estilos*/
+      #header {
+        position: relative;
+        height: 90px; /* Ajusta la altura según lo necesites */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("./Header2.png"); /* Ruta de la imagen */
+        background-size: cover; /* Asegura que la imagen abarque todo el header */
+        background-position: center; /* Centra la imagen */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        color: white; /* Color del texto para que resalte */
+        font-family: Arial, sans-serif;
+      }
+
+      #header a {
+        text-decoration: none;
+        color: white;
+        font-size: 20px;
+        margin: 0 15px;
+      }
+
+      #header a:hover {
+        text-decoration: underline;
+      }
+      
+      .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--color-secondary); /* Fondo semitransparente */
+            transition: top 0.3s ease-in-out; /* Animación suave */
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+  </head>
+  <body>
+    <header id="header">
+      <button onclick="location.href='Index.html';">Inicio</button>
+      <button onclick="location.href='Dashboards.html';">Power BI</button>
+      <button onclick="location.href='Scripts2.5.html';">Looker</button>
+      <button class="sobremi" onclick="location.href='#software';">Tableau</button>
+      <button class="sobremi" onclick="location.href='#software';">Excel</button>      
+      <button class="sobremi" onclick="location.href='#software';">SSRS</button>      
+    </header>
+    <h1>Dashboards Interactivos</h1>
+
+    <!-- Menu de Navegacion -->
+
+    <div class="projects-container">
+      <!-- Project 1 -->
+      <div class="project-card">
+        <img
+          src="./img/PowerBI.JPG"
+          alt="Database Migration Project"
+          class="project-image"
+        />
+        <div class="project-content">
+          <h3 class="project-title">Dashboard Power BI</h3>
+          <div class="tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">SQL Server</span>
+            <span class="tag">Intelisis</span>
+          </div>
+          <p class="project-description">
+            Se consulto en una base de datos en SQL Server,
+            Se prepararon los datos en Power BI y se elaboro reporte de gráfico
+            Posteriormente se consulto en el ERP Intelisis de la emmpresa..
+          </p>
+          <a href="#" class="project-button">View Project</a>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <img
+          src="./img/Migracion.png"
+          alt="Data Visualization Dashboard"
+          class="project-image"
+        />
+        <div class="project-content">
+          <h3 class="project-title">Visualización de datos en Dashboard</h3>
+          <div class="tags">
+            <span class="tag">Tableau</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Analytics</span>
+          </div>
+          <p class="project-description">
+            Panel interactivo que proporciona información en tiempo real sobre el comportamiento del cliente y las métricas de ventas.
+          </p>
+          <a href="#" class="project-button">View Project</a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card">
+        <img
+          src="./img/Execl.jpg"
+          alt="Database Performance Optimization"
+          class="project-image"
+        />
+        <div class="project-content">
+          <h3 class="project-title">Gestión de Inventario Excel</h3>
+          <div class="tags">
+            <span class="tag">Excel</span>
+            <span class="tag">VBA</span>
+            <span class="tag">SQL Server</span>
+          </div>
+          <p class="project-description">
+            Gestión de inventarios atraves de excel utilizando  macros y extrayendo información de una base de datos en Sql Server.
+          </p>
+          <a href="ReportesBD.html" class="project-button">View Project</a>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card">
+        <img
+          src="./img//api/placeholder/400/250"
+          alt="Git-based Version Control for DBs"
+          class="project-image"
+        />
+        <div class="project-content">
+          <h3 class="project-title">Inveztigación de tendencias</h3>
+          <div class="tags">
+            <span class="tag">Looker</span>
+            <span class="tag">Alteryx</span>
+            <span class="tag">BigQuery</span>
+          </div>
+          <p class="project-description">
+            Inveztigación de base de datos tendencias en dondé se consulto información con BigQuery
+            se proceso y transformo con alteryx para realizar la visualización con looker atraves de dashboard.
+          </p>
+          <a href="#" class="project-button">View Project</a>
+        </div>
+      </div>
+
+      <!-- Project 5 -->
+      <div class="project-card">
+        <img
+          src="./img//api/placeholder/400/250"
+          alt="Predictive Analysis Model"
+          class="project-image"
+        />
+        <div class="project-content">
+          <h3 class="project-title">KPIs y Dashboard Análisis de Almacenes</h3>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Excel</span>
+            <span class="tag">Pandas</span>
+          </div>
+          <p class="project-description">
+            Se cargo información a un archivo CSV para realizar limpieza de datos con Python Y pandas
+            Posteriormente se realizaron KPIs y Dashboard de visualización.
+          </p>
+          <a href="#" class="project-button">View Project</a>
+        </div>
+      </div>
+
+      <!-- Project 6 -->
+      <div class="project-card">
+        <img
+          src="./img//api/placeholder/400/250"
+          alt="Data Warehousing Solution"
+          class="project-image"
+        />
+        <div class="project-content">
+          <h3 class="project-title">Dashboard Gestión de Ventas</h3>
+          <div class="tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">SQL Server</span>
+            <span class="tag">DAX</span>
+          </div>
+          <p class="project-description">
+            Se elaboro un reporte donde se consulto la información desde una base de Datos
+            SQL Server y se elaboro un panel de monitoreo usan Power BI implemantando DAX.
+          </p>
+          <a href="#" class="project-button">View Project</a>
+        </div>
+      </div>
+    </div>
+    <br>
+    <section id="#dba">
+        
+    </section>
+    <script>
+      let prevScrollPos = window.pageYOffset;
+      const header = document.getElementById("header");
+
+      window.onscroll = function () {
+        const currentScrollPos = window.pageYOffset;
+
+        if (prevScrollPos > currentScrollPos) {
+          header.style.top = "0"; // Mostrar el header
+        } else {
+          header.style.top = "-60px"; //Ocultar el header
+        }
+        prevScrollPos = currentScrollPos;
+      };
+    </script>
+  </body>
+</html>
